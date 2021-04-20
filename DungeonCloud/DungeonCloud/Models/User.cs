@@ -11,6 +11,9 @@ namespace DungeonCloud.Models
     [Serializable]
     class User
     {
-
+        public string sub { get; set; }
+        public string name { get; set; }
+        public string given_name { get; set; }
+        public string family_name { get; set; }
     }
 }
