@@ -2,29 +2,60 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:cal="http://www.caliburnproject.org"
-        xmlns:vm="clr-namespace:DungeonCloud.ViewModels">
+        xmlns:vm="clr-namespace:DungeonCloud.ViewModels"
+        WindowStyle="None"
+        AllowsTransparency="True">
 
     <Window.DataContext>
         <vm:ShellViewModel></vm:ShellViewModel>
     </Window.DataContext>
-    
-    <Grid Background="White">
+
+    <Window.Resources>
+        <Style x:Key="TopBarStyle">
+            <Setter Property="Control.Background" Value="Transparent"/>
+            <Setter Property="Control.Template">
+
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="True">
+                    <Setter Property="Control.Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#2A2B2E">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{Binding NavigationBarWidth}"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Background="#370E2B"
+        <StackPanel Grid.Column="0" Background="#1C1C1E"
                     cal:Message.Attach="[Event MouseEnter] = [Action MouseEnterNavigationBar] ; 
                     [Event MouseLeave] = [Action MouseLeaveNavigationBar]">
+            <Button cal:Message.Attach="[Event Click] = [Action MainButtonPressed]">main</Button>
+            <Button cal:Message.Attach="[Event Click] = [Action SettingsButtonPressed]">settings</Button>
+            <Button cal:Message.Attach="[Event Click] = [Action RegButtonPressed]">registration</Button>
         </StackPanel>
 
-        <TextBlock Text="{Binding Pew}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   FontSize="20" 
-                   Grid.Column="1"/>
+        <ContentControl Grid.Column = "1" Content="{Binding CurrentView}" Margin="0,31,0,0"></ContentControl>
+
+        <Button Grid.Column="1" Height="35" VerticalAlignment="Top" Background="Transparent" BorderBrush="Gray" Margin="0,-35,0,0">
+            <Button.Effect>
+                <DropShadowEffect Direction="270" ShadowDepth="30" BlurRadius="4" Opacity="0.5"/>
+            </Button.Effect>
+        </Button>
+        <Button Grid.Column="1" Height="30" VerticalAlignment="Top" Style="{StaticResource TopBarStyle}" 
+                cal:Message.Attach="[Event MouseMove] = [Action TopBarMouseDrag($view, $eventArgs)] ; [Event MouseRightButtonDown] = [Action TopBarMouseDown($view, $eventArgs)]"></Button>
     </Grid>
 
 </Window>

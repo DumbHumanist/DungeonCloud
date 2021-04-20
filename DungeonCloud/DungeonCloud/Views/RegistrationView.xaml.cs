@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonCloud.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace DungeonCloud.Views
     /// <summary>
     /// Логика взаимодействия для RegistrationView.xaml
     /// </summary>
-    public partial class RegistrationView : UserControl
+    public partial class RegistrationView : UserControl, IUserView
     {
         public RegistrationView()
         {

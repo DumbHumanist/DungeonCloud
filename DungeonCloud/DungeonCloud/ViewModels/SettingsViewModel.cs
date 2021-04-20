@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DungeonCloud.ViewModels
 {
-    class SettingsViewModel : Caliburn.Micro.PropertyChangedBase, IUserView
+    class SettingsViewModel : Caliburn.Micro.PropertyChangedBase
     {
 
     }

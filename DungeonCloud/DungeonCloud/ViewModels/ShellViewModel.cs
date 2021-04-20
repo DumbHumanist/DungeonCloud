@@ -1,10 +1,35 @@
+using DungeonCloud.Infrastructure;
+using DungeonCloud.Views;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace DungeonCloud.ViewModels {
     public class ShellViewModel : Caliburn.Micro.PropertyChangedBase, IShell 
     {
+
+        IUserView mainView = new UserSpaceView();
+        IUserView settingsView = new SettingsView();
+        IUserView registrationView = new RegistrationView();
+        IUserView currentView;
+        public IUserView CurrentView
+        {
+            set
+            {
+                currentView = value;
+                NotifyOfPropertyChange();
+            }
+            get => currentView;
+        }
+
+        public ShellViewModel()
+        {
+            currentView = registrationView;
+        }
+
         private int navigationBarWidth = 40;
         public int NavigationBarWidth
         {
@@ -21,19 +46,48 @@ namespace DungeonCloud.ViewModels {
         }
         private bool navigationBarEntered = false;
 
-        private string pew = "kekw";
-        public string Pew
+        private double mouseX;
+
+
+
+        //Window Dragging
+        public void TopBarMouseDown(System.Windows.Window w, MouseEventArgs e)
         {
-            set
-            {
-                pew = value;
-            }
-            get => pew;
+            //w = null;
+            System.Windows.Point position = e.GetPosition(w);
+            int mX = (int)position.X;
+            mouseX = mX;
         }
 
+        public void TopBarMouseDrag(System.Windows.Window w, MouseEventArgs e)
+        {
+            w = Application.Current.Windows.OfType<Window>().FirstOrDefault();
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                System.Windows.Point position = e.GetPosition(w);
+                int mX = (int)position.X;
+                int mY = (int)position.Y;
+                w.Top = w.Top + mY - 15;
+                w.Left = w.Left + mX - mouseX;
+            }
+        }
 
-        
+        //navigation buttons
 
+        public void MainButtonPressed()
+        {
+            CurrentView = mainView;
+        }
+        public void SettingsButtonPressed()
+        {
+            CurrentView = settingsView;
+        }
+        public void RegButtonPressed()
+        {
+            CurrentView = registrationView;
+        }
+
+        //
 
         public void MouseEnterNavigationBar()
         {

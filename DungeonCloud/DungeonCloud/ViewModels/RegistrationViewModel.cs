@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DungeonCloud.ViewModels
 {
-    class RegistrationViewModel : Caliburn.Micro.PropertyChangedBase, IUserView
+    class RegistrationViewModel : Caliburn.Micro.PropertyChangedBase
     {
         public void AuthorizeWithChrome()
         {
