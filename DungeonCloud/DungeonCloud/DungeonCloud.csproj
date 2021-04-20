@@ -83,6 +83,8 @@
     </ApplicationDefinition>
     <Compile Include="Infrastructure\AppBootstrapper.cs" />
     <Compile Include="Infrastructure\IShell.cs" />
+    <Compile Include="Infrastructure\Package.cs" />
+    <Compile Include="Models\Network\NetworkManager.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserDirectory.cs" />
     <Compile Include="App.xaml.cs">
