@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonCloud.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace DungeonCloud.Views
     /// <summary>
     /// Логика взаимодействия для UserSpaceView.xaml
     /// </summary>
-    public partial class UserSpaceView : UserControl
+    public partial class UserSpaceView : UserControl, IUserView
     {
         public UserSpaceView()
         {
