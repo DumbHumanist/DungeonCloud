@@ -50,27 +50,7 @@ namespace DungeonCloud.ViewModels {
 
 
 
-        //Window Dragging
-        public void TopBarMouseDown(System.Windows.Window w, MouseEventArgs e)
-        {
-            //w = null;
-            System.Windows.Point position = e.GetPosition(w);
-            int mX = (int)position.X;
-            mouseX = mX;
-        }
-
-        public void TopBarMouseDrag(System.Windows.Window w, MouseEventArgs e)
-        {
-            w = Application.Current.Windows.OfType<Window>().FirstOrDefault();
-            if (e.RightButton == MouseButtonState.Pressed)
-            {
-                System.Windows.Point position = e.GetPosition(w);
-                int mX = (int)position.X;
-                int mY = (int)position.Y;
-                w.Top = w.Top + mY - 15;
-                w.Left = w.Left + mX - mouseX;
-            }
-        }
+       
 
         //navigation buttons
 
