@@ -2,6 +2,7 @@ namespace DungeonCloud {
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
+    using DungeonCloud.ViewModels;
 
     public class AppBootstrapper : BootstrapperBase {
         SimpleContainer container;
