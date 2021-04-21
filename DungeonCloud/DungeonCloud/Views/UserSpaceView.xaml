@@ -11,7 +11,7 @@
         <vm:UserSpaceViewModel></vm:UserSpaceViewModel>
     </UserControl.DataContext>
     <Grid>
-        <Grid Margin="20,10">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -20,14 +20,24 @@
             
             <TextBox
                 Grid.Row="0" 
-                Text="aboba">
+                Text="aboba"
+                Background="Transparent">
                 
             </TextBox>
 
             <ListView
                 Grid.Row="2" 
-                ItemsSource="{Binding DirAndFileCollection}"
-                SelectedItem="{Binding SelectedItem}">
+                ItemsSource="{Binding DirAndFileCollection, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                SelectedItem="{Binding SelectedItem}"
+                Background="Transparent">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Image Source="{Binding DirAndFileCollection.ImageSource}"></Image>
+                            <TextBlock Text="{Binding DirAndFileCollection.FSI.Name}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
             </ListView>
         </Grid>
