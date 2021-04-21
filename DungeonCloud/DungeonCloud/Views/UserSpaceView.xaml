@@ -33,8 +33,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <Image Source="{Binding DirAndFileCollection.ImageSource}"></Image>
-                            <TextBlock Text="{Binding DirAndFileCollection.FSI.Name}"></TextBlock>
+                            <Image Source="{Binding ImageSource}" Height="80"></Image>
+                            <TextBlock Text="{Binding FSI}"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

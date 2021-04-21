@@ -17,7 +17,7 @@ namespace DungeonCloud.ViewModels
 
         public DirectoryInfo CurrentDirectory
         {
-            get { return currentDirectory; }
+            get => currentDirectory;
             set
             {
                 currentDirectory = value;
@@ -30,7 +30,7 @@ namespace DungeonCloud.ViewModels
 
         public ObservableCollection<FileSystemInfoExt> DirAndFileCollection
         {
-            get { return dirAndFileCollection; }
+            get => dirAndFileCollection;
             set 
             {
                 dirAndFileCollection = value;
@@ -42,7 +42,7 @@ namespace DungeonCloud.ViewModels
 
         public FileSystemInfoExt SelectedItem 
         {
-            get { return selectedItem; }
+            get => selectedItem;
             set
             {
                 selectedItem = value;
@@ -55,6 +55,12 @@ namespace DungeonCloud.ViewModels
         {
             //CurrentDirectory = ud.Dir;
             //>получаем UserDirectory текущего пользователя с сервера
+            DirAndFileCollection = new ObservableCollection<FileSystemInfoExt>();
+            DirAndFileCollection.Add(new FileSystemInfoExt
+            {
+                FSI = new FileInfo("D:\\som diks\\pngaaa.com-1749200.png"),
+                ImageSource = "D:\\som diks\\pngaaa.com-1749200.png"
+            });
         }
 
         private void CollectionRefresh()
