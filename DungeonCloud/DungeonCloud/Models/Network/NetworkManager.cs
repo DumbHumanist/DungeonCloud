@@ -62,6 +62,31 @@ namespace DungeonCloud.Models.Network
             Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             client.Connect(ep);
             client.Send(Encoding.Default.GetBytes($"%{JsonConvert.SerializeObject(new Package(1, userDirectory, this.Session, fileToUpload))}"));
+            client.SendFile(fileToUpload.FullName);
+        }
+
+        public byte[] DownloadFile(UserDirectory userDirectory, string pathToFileFromUserDirectory, int fileSize)
+        {
+            string serverIP = "127.0.0.1";
+            int serverPort = 23737;
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
+            Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            client.Connect(ep);
+            client.Send(Encoding.Default.GetBytes($"%{JsonConvert.SerializeObject(new Package(2, this.Session))}"));
+            byte[] buf = new byte[fileSize];
+            client.Receive(buf);
+            return buf;          
+        }
+
+        public void RemoveFile(UserDirectory userDirectory, string pathToFileFromUserDirectory)
+        {
+            string serverIP = "127.0.0.1";
+            int serverPort = 23737;
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
+            Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            client.Connect(ep);
+            client.Send(Encoding.Default.GetBytes($"%{JsonConvert.SerializeObject($"{userDirectory.UserSub}~{pathToFileFromUserDirectory}")}"));
+;
         }
 
 
