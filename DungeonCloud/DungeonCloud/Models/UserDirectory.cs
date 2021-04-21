@@ -9,10 +9,10 @@ namespace DungeonCloud.Models
 {
     class UserDirectory
     {
-        string DirectoryName { get; set; }
+        public string DirectoryName { get; set; }
 
-        string UserSub { get; set; }
+        public string UserSub { get; set; }
 
-        DirectoryInfo Dir { get; set; }
+        public DirectoryInfo Dir { get; set; }
     }
 }
