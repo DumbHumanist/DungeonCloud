@@ -11,10 +11,25 @@
         <vm:UserSpaceViewModel></vm:UserSpaceViewModel>
     </UserControl.DataContext>
     <Grid>
-        <Label Margin="300, 200"
-               Content="UserSpaceView"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center">
-        </Label>
+        <Grid Margin="20,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="14*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <TextBox
+                Grid.Row="0" 
+                Text="aboba">
+                
+            </TextBox>
+
+            <ListView
+                Grid.Row="2" 
+                ItemsSource="{Binding DirAndFileCollection}"
+                SelectedItem="{Binding SelectedItem}">
+
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>

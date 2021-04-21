@@ -85,6 +85,7 @@
     <Compile Include="Infrastructure\IShell.cs" />
     <Compile Include="Infrastructure\IUserView.cs" />
     <Compile Include="Infrastructure\Package.cs" />
+    <Compile Include="Models\FileSystemInfoExt.cs" />
     <Compile Include="Models\Network\NetworkManager.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserDirectory.cs" />
