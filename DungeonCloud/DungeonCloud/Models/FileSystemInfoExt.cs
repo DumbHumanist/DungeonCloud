@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DungeonCloud.Models
 {
-    class FileSystemInfoExt
+    public class FileSystemInfoExt
     {
         public string ImageSource { get; set; }
 

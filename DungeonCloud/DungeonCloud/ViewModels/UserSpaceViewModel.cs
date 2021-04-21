@@ -61,22 +61,22 @@ namespace DungeonCloud.ViewModels
         {
             DirAndFileCollection.Clear();
             DirAndFileCollection = new ObservableCollection<FileSystemInfoExt>();
+            Environment.CurrentDirectory =
+                Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
 
             foreach (FileSystemInfo fsi in CurrentDirectory.GetFileSystemInfos())
             {
                 if (Path.GetExtension(fsi.FullName) == "")
                     DirAndFileCollection.Add(new FileSystemInfoExt()
                     {
-                        //добавляем картинку или иконку папки
-
+                        ImageSource = Environment.CurrentDirectory + @"\folder-128.png",
                         FSI = fsi
                     });
 
                 else
                     DirAndFileCollection.Add(new FileSystemInfoExt()
                     {
-                        //добавляем картинку или иконку файла
-
+                        ImageSource = Environment.CurrentDirectory + @"\file-128.png",
                         FSI = fsi
                     });
             }
