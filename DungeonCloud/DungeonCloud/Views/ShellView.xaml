@@ -30,39 +30,116 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="NavigationButton">
+            <Setter Property="Control.Margin" Value="2, 5, 2, 5"/>
+            <Setter Property="Control.BorderThickness" Value="0"/>
+            <Setter Property="Control.IsEnabled" Value="{Binding CanNavigation}"/>
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                                    <SplineThicknessKeyFrame KeyTime="00:00:00" Value="2, 5, 2, 5" />
+                                    <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="2, 3, 2, 7" />
+                                </ThicknessAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                                    <SplineThicknessKeyFrame KeyTime="00:00:00" Value="2, 3, 2, 7" />
+                                    <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="2, 5, 2, 5" />
+                                </ThicknessAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
-    <Grid Background="#2A2B2E">
-
+    <Grid>
+       
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{Binding NavigationBarWidth}"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Background="#1C1C1E"
-                    cal:Message.Attach="[Event MouseEnter] = [Action MouseEnterNavigationBar] ; 
-                    [Event MouseLeave] = [Action MouseLeaveNavigationBar]">
-
-            <Button cal:Message.Attach="[Event Click] = [Action MainButtonPressed]"
-                    Background="Transparent" BorderThickness="0"
-                    Margin="2,20,2,2">
-                <StackPanel>
-                    <Image Source="{Binding MainImage}" Height="40"/>
-                </StackPanel>
-            </Button>
-            <Button cal:Message.Attach="[Event Click] = [Action SettingsButtonPressed]"
-                    Background="Transparent" BorderThickness="0"
-                    Margin="2">
-                <StackPanel>
-                    <Image Source="{Binding SettingsImage}" Height="40"/>
-                </StackPanel>
+        <Canvas Grid.Column="0">
+            <Button Grid.Column="0" Height="1035" Width="{Binding NavigationBarWidth}" VerticalAlignment="Top" Background="Transparent" BorderBrush="Gray" RenderTransformOrigin="0.5,0.5"
+                    Canvas.ZIndex ="1" Canvas.Left="-272" Canvas.Top="-35">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.174"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0.497"/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+                <Button.Effect>
+                    <DropShadowEffect Direction="360" ShadowDepth="271" BlurRadius="7" Opacity="0.7"/>
+                </Button.Effect>
             </Button>
 
-            <Button cal:Message.Attach="[Event Click] = [Action RegButtonPressed]">registration</Button>
-        </StackPanel>
 
-        <ContentControl Grid.Column = "1" Content="{Binding CurrentView}" Margin="0,31,0,0"></ContentControl>
 
+            <StackPanel Grid.Column="0" Background="{Binding Color3}"
+                        Height="1000"
+                        Width="{Binding NavigationBarWidth}"
+                        Canvas.ZIndex ="0"
+                        cal:Message.Attach="[Event MouseEnter] = [Action MouseEnterNavigationBar] ; 
+                        [Event MouseLeave] = [Action MouseLeaveNavigationBar]">
+                <Label Margin="5"></Label>
+                <Button x:Name="ButtonMain" Style="{StaticResource NavigationButton}"
+                    cal:Message.Attach="[Event Click] = [Action MainButtonPressed]"
+                    Background="Transparent">
+                <StackPanel>
+                    <Image Source="{Binding MainImage}" Height="50"/>
+                </StackPanel>
+                </Button>
+                <Button x:Name="ButtonSettings" Style="{StaticResource NavigationButton}"
+                        cal:Message.Attach="[Event Click] = [Action SettingsButtonPressed]"
+                        Background="Transparent">
+                    <StackPanel>
+                        <Image Source="{Binding SettingsImage}" Height="50"/>
+                    </StackPanel>
+                </Button>
+                <Label Margin="170"></Label>
+                <Button x:Name="ButtonReg" Style="{StaticResource NavigationButton}"
+                        cal:Message.Attach="[Event Click] = [Action RegButtonPressed]"
+                        Background="Transparent"
+                        VerticalAlignment="Bottom">
+                    <StackPanel>
+                        <Image Source="{Binding RegImage}" Height="50"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Canvas>
+        
+        <Rectangle Grid.Column="1" x:Name="MainGradient">
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <GradientStop Color="{Binding Color1}" Offset="-0.5"></GradientStop>
+                    <GradientStop Color="{Binding Color2}" Offset="1.5"></GradientStop>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        
+        <ContentControl Grid.Column = "1" Content="{Binding CurrentView}"></ContentControl>
+        
     </Grid>
 
 </Window>
