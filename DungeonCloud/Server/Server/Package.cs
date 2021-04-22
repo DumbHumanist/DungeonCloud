@@ -22,10 +22,27 @@ namespace Server
             Sub = user.sub;
             FileTransfer = fileInfo;
         }
+        public Package(int type, UserDirectory userDirectory, User user, FileSystemInfo fileInfo, string path)
+        {
+            Type = type;
+            UserDirectory = userDirectory;
+            Sub = user.sub;
+            FileTransfer = fileInfo;
+            Path = path;
+        }
         public Package(int type, User user)
         {
             Type = type;
             Sub = user.sub;
         }
+        public Package(int type, UserDirectory userDir, string path)
+        {
+            Type = type;
+            UserDirectory = userDir;
+            Path = path;
+
+        }
+
+        public Package() { }
     }
 }

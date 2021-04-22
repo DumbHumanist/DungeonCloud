@@ -11,18 +11,18 @@ namespace DungeonCloud.Models
     {
         static SessionSingleton instance;
 
-        NetworkManager networkManager = new NetworkManager();
+        private NetworkManager nM;
+
+        public NetworkManager NM
+        {
+            get => nM;
+        }
 
         private SessionSingleton()
         {
-            LoadSession();
+            nM = new NetworkManager();
         }
 
         public static SessionSingleton Instance => instance ?? (instance = new SessionSingleton());
-
-        public async void LoadSession()
-        {
-            await networkManager.StartAuthViaGoogle();
-        }
     }
 }

@@ -42,16 +42,23 @@ namespace DungeonCloud.Models.Network
         }
         public UserDirectory LoadFiles(User Session)
         {
-            string serverIP = "127.0.0.1";
-            int serverPort = 23737;
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
-            Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            client.Connect(ep);
-            client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(new Package(0, this.Session))}"));
-            byte[] bytes = new byte[500000];
-            client.Receive(bytes);
-            string data = Encoding.Default.GetString(bytes);
-            return JsonConvert.DeserializeObject<UserDirectory>(data);
+            try
+            {
+                string serverIP = "127.0.0.1";
+                int serverPort = 23737;
+                IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
+                Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+                client.Connect(ep);
+                client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(new Package(0, this.Session))}"));
+                byte[] bytes = new byte[500000];
+                client.Receive(bytes);
+                string data = Encoding.Default.GetString(bytes);
+                return JsonConvert.DeserializeObject<UserDirectory>(data);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public UserDirectory UploadNewFile(UserDirectory userDirectory, FileInfo fileToUpload,string pathToFileFromUserDirectory)

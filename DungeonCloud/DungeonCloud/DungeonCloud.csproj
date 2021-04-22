@@ -83,12 +83,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\AppBootstrapper.cs" />
+    <Compile Include="Infrastructure\FileSystemInfoConverter.cs" />
     <Compile Include="Infrastructure\IShell.cs" />
     <Compile Include="Infrastructure\IUserView.cs" />
     <Compile Include="Infrastructure\Package.cs" />
-    <Compile Include="Models\BmsEngine.cs" />
     <Compile Include="Models\FileSystemInfoExt.cs" />
-    <Compile Include="Models\ImageColoring.cs" />
     <Compile Include="Models\Network\NetworkManager.cs" />
     <Compile Include="Models\SessionSingleton.cs" />
     <Compile Include="Models\Theme.cs" />
@@ -99,6 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\UserDirectorySingletone.cs" />
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />

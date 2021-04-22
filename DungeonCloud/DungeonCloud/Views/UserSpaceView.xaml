@@ -43,10 +43,6 @@
                             <TextBlock Text="{Binding FSI.Name}" Grid.Column="1"></TextBlock>
                             <Button Grid.Column="2"></Button>
                         </Grid>
-                        <StackPanel>
-                            <Image Source="{Binding ImageSource}" Height="80"></Image>
-                            <TextBlock Text="{Binding FSI}"></TextBlock>
-                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 

@@ -12,5 +12,7 @@ namespace Server
         public string name { get; set; }
         public string given_name { get; set; }
         public string family_name { get; set; }
+
+        public User() { }
     }
 }

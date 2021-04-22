@@ -21,6 +21,13 @@ namespace Server
             Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             server.Bind(ep);
             server.Listen(5);
+            var settings = new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>
+                    {
+                        new FileSystemInfoConverter()
+                    }
+            };
             Console.WriteLine("Server started...");
             while (true)
             {
@@ -37,14 +44,14 @@ namespace Server
                 Package reqPackage = JsonConvert.DeserializeObject<Package>(request);
 
 
-                if (reqPackage.Type==0)
-                {            
-                   
+                if (reqPackage.Type == 0)
+                {
+
                     using (UserDirectoryContext db = new UserDirectoryContext())
                     {
                         foreach(var i in db.UserDirectories)
                         {
-                            if(i.UserSub.Contains(reqPackage.Sub) || reqPackage.Sub.Contains(i.UserSub))
+                            if (i.UserSub.Contains(reqPackage.Sub) || reqPackage.Sub.Contains(i.UserSub))
                             {
                                 client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(i)}"));
                                 break;
@@ -52,7 +59,7 @@ namespace Server
                         }
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.Sub;
-                        tmp.Dir = new System.IO.DirectoryInfo($"{reqPackage.Sub}");
+                        tmp.Dir = JsonConvert.SerializeObject(new System.IO.DirectoryInfo($"{reqPackage.Sub}"), settings);
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
                         client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
@@ -74,30 +81,30 @@ namespace Server
                         }
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.Sub;
-                        tmp.Dir = new System.IO.DirectoryInfo($"{reqPackage.UserDirectory.Dir.Name}");
+                        tmp.Dir = JsonConvert.SerializeObject(new System.IO.DirectoryInfo($"{reqPackage.Sub}"), settings);
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
                         client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
-                    }             
+                    }
                 }
                 else if (reqPackage.Type == 3)
                 {
                     using (UserDirectoryContext db = new UserDirectoryContext())
                     {
 
-                        File.Delete($"{reqPackage.UserDirectory.Dir.Name}\\{reqPackage.Path}");
+                        File.Delete($"{reqPackage.Sub}\\{reqPackage.Path}");
 
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.Sub;
-                        tmp.Dir = new System.IO.DirectoryInfo($"{reqPackage.UserDirectory.Dir.Name}");
+                        tmp.Dir = JsonConvert.SerializeObject(new System.IO.DirectoryInfo($"{reqPackage.Sub}"), settings);
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
                         client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
                     }
                 }
-                else if(reqPackage.Type == 2)
+                else if (reqPackage.Type == 2)
                 {
-                    client.SendFile($"{reqPackage.UserDirectory.Dir.Name}\\{reqPackage.Path}");
+                    client.SendFile($"{reqPackage.Sub}\\{reqPackage.Path}");
                 }
 
                 client.Shutdown(SocketShutdown.Both);

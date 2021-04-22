@@ -13,6 +13,8 @@ namespace DungeonCloud.Models
 
         public string UserSub { get; set; }
 
-        public DirectoryInfo Dir { get; set; }
+        public string Dir { get; set; }
+
+        public UserDirectory() { }
     }
 }

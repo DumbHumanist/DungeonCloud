@@ -43,5 +43,7 @@ namespace DungeonCloud.Infrastructure
             Path = path;
 
         }
+
+        public Package() { }
     }
 }

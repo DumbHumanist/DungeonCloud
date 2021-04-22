@@ -15,6 +15,11 @@
     
     <Grid>
         <Button Content="Connect with Chrome"
-                cal:Message.Attach = "[Event MouseClick] = [Action AuthorizeWithChrome]" Width="200" Height="50"></Button>
+                cal:Message.Attach = "[Event Click] = [Action AuthorizeWithChrome]"
+                Width="200"
+                Height="50">
+            
+        </Button>
+        
     </Grid>
 </UserControl>
