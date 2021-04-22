@@ -42,8 +42,22 @@
         <StackPanel Grid.Column="0" Background="#1C1C1E"
                     cal:Message.Attach="[Event MouseEnter] = [Action MouseEnterNavigationBar] ; 
                     [Event MouseLeave] = [Action MouseLeaveNavigationBar]">
-            <Button cal:Message.Attach="[Event Click] = [Action MainButtonPressed]">main</Button>
-            <Button cal:Message.Attach="[Event Click] = [Action SettingsButtonPressed]">settings</Button>
+
+            <Button cal:Message.Attach="[Event Click] = [Action MainButtonPressed]"
+                    Background="Transparent" BorderThickness="0"
+                    Margin="2,20,2,2">
+                <StackPanel>
+                    <Image Source="{Binding MainImage}" Height="40"/>
+                </StackPanel>
+            </Button>
+            <Button cal:Message.Attach="[Event Click] = [Action SettingsButtonPressed]"
+                    Background="Transparent" BorderThickness="0"
+                    Margin="2">
+                <StackPanel>
+                    <Image Source="{Binding SettingsImage}" Height="40"/>
+                </StackPanel>
+            </Button>
+
             <Button cal:Message.Attach="[Event Click] = [Action RegButtonPressed]">registration</Button>
         </StackPanel>
 

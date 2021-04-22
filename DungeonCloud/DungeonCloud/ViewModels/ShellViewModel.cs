@@ -1,6 +1,7 @@
 using DungeonCloud.Infrastructure;
 using DungeonCloud.Views;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,12 +25,6 @@ namespace DungeonCloud.ViewModels {
             }
             get => currentView;
         }
-
-        public ShellViewModel()
-        {
-            currentView = registrationView;
-        }
-
         private int navigationBarWidth = 40;
         public int NavigationBarWidth
         {
@@ -46,11 +41,40 @@ namespace DungeonCloud.ViewModels {
         }
         private bool navigationBarEntered = false;
 
-        private double mouseX;
+
+        string Dir;
+
+        string settingsImage;
+        public string SettingsImage
+        {
+            set
+            {
+                settingsImage = value;
+                NotifyOfPropertyChange();
+            }
+            get => settingsImage;
+        }
+
+        string mainImage;
+        public string MainImage
+        {
+            set
+            {
+                mainImage = value;
+                NotifyOfPropertyChange();
+            }
+            get => mainImage;
+        }
 
 
+        public ShellViewModel()
+        {
+            Dir = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
+            MainImage = Dir + "\\Main-128.png";
+            SettingsImage = Dir + "\\Settings-128.png";
+            currentView = registrationView;
+        }
 
-       
 
         //navigation buttons
 
