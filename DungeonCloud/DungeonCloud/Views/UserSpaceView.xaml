@@ -32,10 +32,17 @@
                 Background="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <Image Source="{Binding DirAndFileCollection.ImageSource}"></Image>
-                            <TextBlock Text="{Binding DirAndFileCollection.FSI.Name}"></TextBlock>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Image Source="{Binding ImageSource}" Grid.Column="0"></Image>
+                            <TextBlock Text="{Binding FSI.Name}" Grid.Column="1"></TextBlock>
+                            <Button Grid.Column="2"></Button>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
