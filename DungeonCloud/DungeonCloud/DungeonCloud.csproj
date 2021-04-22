@@ -90,6 +90,7 @@
     <Compile Include="Models\FileSystemInfoExt.cs" />
     <Compile Include="Models\ImageColoring.cs" />
     <Compile Include="Models\Network\NetworkManager.cs" />
+    <Compile Include="Models\SessionSingleton.cs" />
     <Compile Include="Models\Theme.cs" />
     <Compile Include="Models\ThemeSingleton.cs" />
     <Compile Include="Models\User.cs" />
