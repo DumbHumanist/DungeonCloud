@@ -123,54 +123,42 @@ namespace DungeonCloud.ViewModels {
             get => color3;
         }
 
-        byte[] test;
-        public byte[] Test
+        string buttonColor;
+        public string ButtonColor
         {
             set
             {
-                test = value;
+                buttonColor = value;
                 NotifyOfPropertyChange();
             }
-            get => test;
+            get => buttonColor;
+        }
+        string buttonColorPressed;
+        public string ButtonColorPressed
+        {
+            set
+            {
+                buttonColorPressed = value;
+                NotifyOfPropertyChange();
+            }
+            get => buttonColorPressed;
         }
 
         public ShellViewModel()
         {
-            Dir = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons\Default";
-            MainImage = Dir + "\\main.png";
-            SettingsImage = Dir + "\\settings.png";
-            RegImage = Dir + "\\reg.png";
+            Dir = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
             currentView = registrationView;
 
-            Color1 = "#240b36";
-            Color2 = "#c31432";
-            Color3 = "#2b0721";
+            ThemeSingleton.Instance.LoadThemes();
 
-            Bitmap bitmap = new Bitmap(MainImage);
+            MainImage = Dir + "\\Processed\\main.png";
+            SettingsImage = Dir + "\\Processed\\settings.png";
+            RegImage = Dir + "\\Processed\\reg.png";
 
-            
-            for (int i = 0; i < bitmap.Width; ++i)
-                for (int j = 0; j < bitmap.Height; ++j)
-                {
-                    Color color = bitmap.GetPixel(i, j);
-                    bitmap.SetPixel(i, j, Color.FromArgb(color.A,0,250,0));
-                }   
-            
-
-
-            bitmap.Save(Dir + "\\suka.png", ImageFormat.Png);
-
-            /*
-            BmsEngine.Init(new BitmapImage(new Uri(MainImage)));
-            ImageColoring ic = new ImageColoring();
-            Test = ic.SetColor();
-            using (Image image = Image.FromStream(new MemoryStream(Test)))
-            {
-                image.Save(Dir + "\\suka.png", ImageFormat.Png);  // Or Png
-            }*/
-
-            //891133
         }
+
+        //
+        
 
 
         //navigation buttons
@@ -178,23 +166,23 @@ namespace DungeonCloud.ViewModels {
         public void MainButtonPressed()
         {
             CurrentView = mainView;
-            MainImage = Dir + "\\main-pressed.png";
-            SettingsImage = Dir + "\\settings.png";
-            RegImage = Dir + "\\reg.png";
+            MainImage = Dir + "\\Processed\\main-pressed.png";
+            SettingsImage = Dir + "\\Processed\\settings.png";
+            RegImage = Dir + "\\Processed\\reg.png";
         }
         public void SettingsButtonPressed()
         {
             CurrentView = settingsView;
-            MainImage = Dir + "\\main.png";
-            SettingsImage = Dir + "\\settings-pressed.png";
-            RegImage = Dir + "\\reg.png";
+            MainImage = Dir + "\\Processed\\main.png";
+            SettingsImage = Dir + "\\Processed\\settings-pressed.png";
+            RegImage = Dir + "\\Processed\\reg.png";
         }
         public void RegButtonPressed()
         {
             CurrentView = registrationView;
-            MainImage = Dir + "\\main.png";
-            SettingsImage = Dir + "\\settings.png";
-            RegImage = Dir + "\\reg-pressed.png";
+            MainImage = Dir + "\\Processed\\main.png";
+            SettingsImage = Dir + "\\Processed\\settings.png";
+            RegImage = Dir + "\\Processed\\reg-pressed.png";
         }
 
         //

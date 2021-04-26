@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:vm="clr-namespace:DungeonCloud.ViewModels"
+        xmlns:singleton="clr-namespace:DungeonCloud.Models"
         Width ="1000"
         Height="600">
 
@@ -96,7 +97,7 @@
 
 
 
-            <StackPanel Grid.Column="0" Background="{Binding Color3}"
+            <StackPanel Grid.Column="0" Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, UpdateSourceTrigger=PropertyChanged}"
                         Height="1000"
                         Width="{Binding NavigationBarWidth}"
                         Canvas.ZIndex ="0"
@@ -132,8 +133,8 @@
         <Rectangle Grid.Column="1" x:Name="MainGradient">
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="{Binding Color1}" Offset="-0.5"></GradientStop>
-                    <GradientStop Color="{Binding Color2}" Offset="1.5"></GradientStop>
+                    <GradientStop Color="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.WindowBackgroundColor1, UpdateSourceTrigger=PropertyChanged}" Offset="-0.5"></GradientStop>
+                    <GradientStop Color="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.WindowBackgroundColor2, UpdateSourceTrigger=PropertyChanged}" Offset="1.5"></GradientStop>
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
