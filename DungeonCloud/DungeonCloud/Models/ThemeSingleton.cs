@@ -19,6 +19,7 @@ namespace DungeonCloud.Models
             set
             {
                 currentTheme = value;
+                currentTheme.SetColors();
                 NotifyOfPropertyChange();
             }
             get => currentTheme;
@@ -34,6 +35,8 @@ namespace DungeonCloud.Models
             }
             get => themes;
         }
+
+        string Dir;
         public static ThemeSingleton Instance => instance ?? (instance = new ThemeSingleton());
 
         private ThemeSingleton()
@@ -44,27 +47,28 @@ namespace DungeonCloud.Models
 
         public void SaveThemes()
         {
-            File.Delete("currentTheme.txt");
-            using (StreamWriter sw = new StreamWriter("currentTheme.txt", true))
+            File.Delete($"{Dir}\\Themes\\currentTheme.txt");
+            using (StreamWriter sw = new StreamWriter($"{Dir}\\Themes\\currentTheme.txt", true))
             {
-                sw.Write($"{currentTheme.Name};{currentTheme.NavigationButtonBackground};{currentTheme.NavigationButtonForeground};{currentTheme.NavigationButtonBorder};{currentTheme.SlideBarBackground};{CurrentTheme.WindowBackgroundColor}");
+                sw.Write($"{currentTheme.Name};{currentTheme.NavigationButtonColor};{currentTheme.NavigationButtonPressedColor};{currentTheme.SlideBarBackground};{currentTheme.WindowBackgroundColor1};{CurrentTheme.WindowBackgroundColor2}");
             }
-            File.Delete("themes.txt");
-            using (StreamWriter sw = new StreamWriter("themes.txt", true))
+            File.Delete($"{Dir}\\Themes\\themes.txt");
+            using (StreamWriter sw = new StreamWriter($"{Dir}\\Themes\\themes.txt", true))
             {
                 foreach(Theme t in Themes)
-                    sw.Write($"{t.Name};{t.NavigationButtonBackground};{t.NavigationButtonForeground};{t.NavigationButtonBorder};{t.SlideBarBackground};{t.WindowBackgroundColor};");
+                    sw.Write($"{t.Name};{t.NavigationButtonColor};{t.NavigationButtonPressedColor};{t.SlideBarBackground};{t.WindowBackgroundColor1};{t.WindowBackgroundColor2};");
             }
         }
         public void LoadThemes()
         {
-            string[] currentThemeLoad = File.ReadAllText("currentTheme.txt").Split(';');
-            currentTheme = new Theme(currentThemeLoad[0], currentThemeLoad[1], currentThemeLoad[2], currentThemeLoad[3], currentThemeLoad[4], currentThemeLoad[5]);
+            Dir = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
+            string[] currentThemeLoad = File.ReadAllText($"{Dir}\\Themes\\currentTheme.txt").Split(';');
+            currentTheme = new Theme(currentThemeLoad[0], currentThemeLoad[1], currentThemeLoad[2], currentThemeLoad[3], currentThemeLoad[4], currentThemeLoad[5], Dir);
 
-            string[] themesLoad = File.ReadAllText("themes.txt").Split(';');
+            string[] themesLoad = File.ReadAllText($"{Dir}\\Themes\\themes.txt").Split(';');
             for (int i = 0; i < themesLoad.Length - 1;)
             {
-                Themes.Add(new Theme(themesLoad[i++], themesLoad[i++], themesLoad[i++], themesLoad[i++], themesLoad[i++], themesLoad[i++]));
+                Themes.Add(new Theme(themesLoad[i++], themesLoad[i++], themesLoad[i++], themesLoad[i++], themesLoad[i++], themesLoad[i++], Dir));
             }
         }
     }

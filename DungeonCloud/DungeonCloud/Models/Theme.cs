@@ -1,6 +1,10 @@
 ﻿using Caliburn.Micro;
+using DungeonCloud.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +15,7 @@ namespace DungeonCloud.Models
     {
 
         private string name = "Default";
+        private string Dir;
         public string Name
         {
             set
@@ -21,37 +26,26 @@ namespace DungeonCloud.Models
             get => name;
         }
 
-        private string navigationButtonBackground = "White";
-        public string NavigationButtonBackground
+        private string navigationButtonColor = "White";
+        public string NavigationButtonColor
         {
             set
             {
-                navigationButtonBackground = value;
+                navigationButtonColor = value;
                 NotifyOfPropertyChange();
             }
-            get => navigationButtonBackground;
+            get => navigationButtonColor;
         }
 
-        private string navigationButtonForeground = "Black";
-        public string NavigationButtonForeground
+        private string navigationButtonPressedColor = "Black";
+        public string NavigationButtonPressedColor
         {
             set
             {
-                navigationButtonForeground = value;
+                navigationButtonPressedColor = value;
                 NotifyOfPropertyChange();
             }
-            get => navigationButtonForeground;
-        }
-        
-        private string navigationButtonBorder = "LightGray";
-        public string NavigationButtonBorder
-        {
-            set
-            {
-                navigationButtonBorder = value;
-                NotifyOfPropertyChange();
-            }
-            get => navigationButtonBorder;
+            get => navigationButtonPressedColor;
         }
 
         private string slideBarBackground = "#2a2930";
@@ -65,30 +59,78 @@ namespace DungeonCloud.Models
             get => slideBarBackground;
         }
 
-        private string windowBackgroundColor = "";
-        public string WindowBackgroundColor
+        private string windowBackgroundColor1 = "";
+        public string WindowBackgroundColor1
         {
             set
             {
-                windowBackgroundColor = value;
+                windowBackgroundColor1 = value;
                 NotifyOfPropertyChange();
             }
-            get => windowBackgroundColor;
+            get => windowBackgroundColor1;
+        }
+        private string windowBackgroundColor2 = "";
+        public string WindowBackgroundColor2
+        {
+            set
+            {
+                windowBackgroundColor2 = value;
+                NotifyOfPropertyChange();
+            }
+            get => windowBackgroundColor2;
         }
 
         public Theme()
         {
 
         }
-        public Theme(string name, string navigationButtonBackground, string navigationButtonForeground, string navigationButtonBorder, string slideBarBackground, string windowBackgroundColor)
+        public Theme(string name, string navButtonColor, string navButtonPressedColor, string slideBarBackground, string winBgColor1, string winBgColor2, string dir)
         {
             Name = name;
-            NavigationButtonBackground = navigationButtonBackground;
-            NavigationButtonForeground = navigationButtonForeground;
-            NavigationButtonBorder = navigationButtonBorder;
+            NavigationButtonColor = navButtonColor;
+            NavigationButtonPressedColor = navButtonPressedColor;
             SlideBarBackground = slideBarBackground;
-            WindowBackgroundColor = windowBackgroundColor;
+            WindowBackgroundColor1 = winBgColor1;
+            WindowBackgroundColor2 = winBgColor2;
+            Dir = dir;
         }
+        public void SetColors()
+        {
+            ButtonColoring("main.png");
+            ButtonColoring("settings.png");
+            ButtonColoring("reg.png");
+        }
+
+
+        public void ButtonColoring(string path)
+        {
+            Bitmap bitmap = new Bitmap(Dir + "\\Default\\" + path);
+
+            Color c = HexToRGB.HexToColor(NavigationButtonColor);
+
+            for (int i = 0; i < bitmap.Width; ++i)
+                for (int j = 0; j < bitmap.Height; ++j)
+                {
+                    Color color = bitmap.GetPixel(i, j);
+                    bitmap.SetPixel(i, j, Color.FromArgb(color.A, c.R, c.G, c.B));
+                }
+
+            bitmap.Save(Dir + "\\Processed\\" + path, ImageFormat.Png);
+
+            bitmap = new Bitmap(Dir + "\\Default\\" + path);
+
+            c = HexToRGB.HexToColor(NavigationButtonPressedColor);
+
+            for (int i = 0; i < bitmap.Width; ++i)
+                for (int j = 0; j < bitmap.Height; ++j)
+                {
+                    Color color = bitmap.GetPixel(i, j);
+                    bitmap.SetPixel(i, j, Color.FromArgb(color.A, c.R, c.G, c.B));
+                }
+
+            bitmap.Save(Dir + "\\Processed\\" + path.Substring(0, path.LastIndexOf('.')) + "-pressed.png", ImageFormat.Png);
+        }
+
 
         public override string ToString()
         {
