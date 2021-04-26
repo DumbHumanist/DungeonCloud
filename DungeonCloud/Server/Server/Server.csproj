@@ -56,6 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DungeonDirectoryInfo.cs" />
+    <Compile Include="DungeonFileInfo.cs" />
+    <Compile Include="DungeonInfo.cs" />
     <Compile Include="FileSystemInfoConverter.cs" />
     <Compile Include="NetworkManager.cs" />
     <Compile Include="Package.cs" />

@@ -36,6 +36,27 @@ namespace Server
                 Task.Run(() => HandleClient(client));
             }
 
+            DungeonDirectoryInfo GetUserDirectory(string path)
+            {
+                DungeonDirectoryInfo dungeonDirectoryInfoTemp = new DungeonDirectoryInfo();
+                dungeonDirectoryInfoTemp.Path = path;
+                dungeonDirectoryInfoTemp.Name = path.Split('/')[path.Split('/').Length - 1];
+                foreach (var j in new DirectoryInfo(path).GetFiles())
+                {
+                    DungeonFileInfo fi = new DungeonFileInfo();
+                    fi.FileSize = j.Length;
+                    fi.Name = j.Name;
+                    fi.Path = path + "//" + j.Name;
+                    dungeonDirectoryInfoTemp.Children.Add(fi);
+                }
+                foreach (var s in new DirectoryInfo(path).GetDirectories())
+                {
+                    dungeonDirectoryInfoTemp.Children.Add(GetUserDirectory(path+"//"+s.Name));
+                }
+
+                return dungeonDirectoryInfoTemp;
+            }
+
             void HandleClient(Socket client)
             {
                 byte[] recievedBytes = new byte[10240];
@@ -53,13 +74,15 @@ namespace Server
                         {
                             if (i.UserSub.Contains(reqPackage.Sub) || reqPackage.Sub.Contains(i.UserSub))
                             {
-                                client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(i)}"));
+                                
+                                client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(GetUserDirectory(i.UserSub))}"));
                                 break;
                             }
                         }
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.Sub;
-                        tmp.Dir = JsonConvert.SerializeObject(new System.IO.DirectoryInfo($"{reqPackage.Sub}"), settings);
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory()+"//"+reqPackage.Sub);
+                        tmp.Dir = JsonConvert.SerializeObject(GetUserDirectory(reqPackage.Sub));
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
                         client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
@@ -72,7 +95,7 @@ namespace Server
                         using (var stream = new NetworkStream(client))
                         using (var output = File.Create($"{reqPackage.Path}\\{reqPackage.FileTransfer.Name}"))
                         {
-                            var buffer = new byte[(reqPackage.FileTransfer as FileInfo).Length];
+                            var buffer = new byte[(reqPackage.FileTransfer as DungeonFileInfo).FileSize];
                             int bytesRead;
                             while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                             {
@@ -81,7 +104,8 @@ namespace Server
                         }
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.Sub;
-                        tmp.Dir = JsonConvert.SerializeObject(new System.IO.DirectoryInfo($"{reqPackage.Sub}"), settings);
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "//" + reqPackage.Sub);
+                        tmp.Dir = JsonConvert.SerializeObject(GetUserDirectory(reqPackage.Sub));
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
                         client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
@@ -96,7 +120,8 @@ namespace Server
 
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.Sub;
-                        tmp.Dir = JsonConvert.SerializeObject(new System.IO.DirectoryInfo($"{reqPackage.Sub}"), settings);
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "//" + reqPackage.Sub);
+                        tmp.Dir = JsonConvert.SerializeObject(GetUserDirectory(reqPackage.Sub));
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
                         client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
