@@ -12,17 +12,17 @@ namespace Server
         public int Type { get; set; }
         public UserDirectory UserDirectory { get; set; }
         public string Sub { get; set; }
-        public FileSystemInfo FileTransfer { get; set; }
+        public DungeonInfo FileTransfer { get; set; }
         public string Path { get; set; }
 
-        public Package(int type, UserDirectory userDirectory, User user, FileSystemInfo fileInfo)
+        public Package(int type, UserDirectory userDirectory, User user, DungeonInfo fileInfo)
         {
             Type = type;
             UserDirectory = userDirectory;
             Sub = user.sub;
             FileTransfer = fileInfo;
         }
-        public Package(int type, UserDirectory userDirectory, User user, FileSystemInfo fileInfo, string path)
+        public Package(int type, UserDirectory userDirectory, User user, DungeonInfo fileInfo, string path)
         {
             Type = type;
             UserDirectory = userDirectory;
