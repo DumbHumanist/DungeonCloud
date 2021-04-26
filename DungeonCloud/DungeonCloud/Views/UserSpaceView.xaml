@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DungeonCloud.Views"
              xmlns:vm="clr-namespace:DungeonCloud.ViewModels"
+             xmlns:singleton="clr-namespace:DungeonCloud.Models"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -15,20 +17,30 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="14*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="17*"></RowDefinition>
             </Grid.RowDefinitions>
-            
+
             <TextBox
                 Grid.Row="0" 
-                Text="aboba"
-                Background="Transparent">
-                
+                Text="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=CurrentDirectory.FullName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Background="Transparent"
+                IsReadOnly="True">
             </TextBox>
 
+            <Button 
+                Grid.Row="2"
+                Content="Back"
+                cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
+
+            </Button>
+
             <ListView
-                Grid.Row="2" 
-                ItemsSource="{Binding DirAndFileCollection, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                Grid.Row="4" 
+                ItemsSource="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=DirAndFileCollection, UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding SelectedItem}"
+                cal:Message.Attach="[Event DoubleClick] = [Action SelectedItemDoubleClick]"
                 Background="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -38,7 +50,7 @@
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Image Source="{Binding ImageSource}" Grid.Column="0"></Image>
                             <TextBlock Text="{Binding FSI.Name}" Grid.Column="1"></TextBlock>
                             <Button Grid.Column="2"></Button>
