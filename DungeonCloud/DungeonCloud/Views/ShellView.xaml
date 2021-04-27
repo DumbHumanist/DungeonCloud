@@ -108,14 +108,14 @@
                     cal:Message.Attach="[Event Click] = [Action MainButtonPressed]"
                     Background="Transparent">
                 <StackPanel>
-                    <Image Source="{Binding MainImage}" Height="50"/>
+                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=MainImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
                 </StackPanel>
                 </Button>
                 <Button x:Name="ButtonSettings" Style="{StaticResource NavigationButton}"
                         cal:Message.Attach="[Event Click] = [Action SettingsButtonPressed]"
                         Background="Transparent">
                     <StackPanel>
-                        <Image Source="{Binding SettingsImage}" Height="50"/>
+                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=SettingsImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
                     </StackPanel>
                 </Button>
                 <Label Margin="170"></Label>
@@ -124,7 +124,7 @@
                         Background="Transparent"
                         VerticalAlignment="Bottom">
                     <StackPanel>
-                        <Image Source="{Binding RegImage}" Height="50"/>
+                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=RegImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
                     </StackPanel>
                 </Button>
             </StackPanel>

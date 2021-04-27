@@ -7,7 +7,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Color = System.Drawing.Color;
 
 namespace DungeonCloud.Models
 {
@@ -84,7 +88,7 @@ namespace DungeonCloud.Models
         {
 
         }
-        public Theme(string name, string navButtonColor, string navButtonPressedColor, string slideBarBackground, string winBgColor1, string winBgColor2, string dir)
+        public Theme(string name, string slideBarBackground, string winBgColor1, string winBgColor2, string navButtonColor, string navButtonPressedColor, string dir)
         {
             Name = name;
             NavigationButtonColor = navButtonColor;
@@ -96,13 +100,35 @@ namespace DungeonCloud.Models
         }
         public void SetColors()
         {
-            ButtonColoring("main.png");
-            ButtonColoring("settings.png");
-            ButtonColoring("reg.png");
+            ThemeSingleton.Instance.MainImageDefault = ToBitmapImage(ButtonColoring("main.png"));
+            ThemeSingleton.Instance.SettingsImageDefault = ToBitmapImage(ButtonColoring("settings.png"));
+            ThemeSingleton.Instance.RegImageDefault = ToBitmapImage(ButtonColoring("reg.png"));
+            ThemeSingleton.Instance.MainImagePressed = ToBitmapImage(ButtonBgColoring("main.png"));
+            ThemeSingleton.Instance.SettingsImagePressed = ToBitmapImage(ButtonBgColoring("settings.png"));
+            ThemeSingleton.Instance.RegImagePressed = ToBitmapImage(ButtonBgColoring("reg.png"));
+
+        }
+
+        public static BitmapImage ToBitmapImage(Bitmap bitmap)
+        {
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
         }
 
 
-        public void ButtonColoring(string path)
+        public Bitmap ButtonColoring(string path)
         {
             Bitmap bitmap = new Bitmap(Dir + "\\Default\\" + path);
 
@@ -115,11 +141,16 @@ namespace DungeonCloud.Models
                     bitmap.SetPixel(i, j, Color.FromArgb(color.A, c.R, c.G, c.B));
                 }
 
-            bitmap.Save(Dir + "\\Processed\\" + path, ImageFormat.Png);
+            return bitmap;
+        }
 
-            bitmap = new Bitmap(Dir + "\\Default\\" + path);
 
-            c = HexToRGB.HexToColor(NavigationButtonPressedColor);
+        public Bitmap ButtonBgColoring(string path)
+        {
+
+            Bitmap bitmap = new Bitmap(Dir + "\\Default\\" + path);
+
+            Color c = HexToRGB.HexToColor(NavigationButtonPressedColor);
 
             for (int i = 0; i < bitmap.Width; ++i)
                 for (int j = 0; j < bitmap.Height; ++j)
@@ -128,7 +159,7 @@ namespace DungeonCloud.Models
                     bitmap.SetPixel(i, j, Color.FromArgb(color.A, c.R, c.G, c.B));
                 }
 
-            bitmap.Save(Dir + "\\Processed\\" + path.Substring(0, path.LastIndexOf('.')) + "-pressed.png", ImageFormat.Png);
+            return bitmap;
         }
 
 

@@ -5,19 +5,58 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DungeonCloud.Views"
              xmlns:vm="clr-namespace:DungeonCloud.ViewModels"
+             xmlns:singleton="clr-namespace:DungeonCloud.Models"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
     <UserControl.DataContext>
         <vm:SettingsViewModel></vm:SettingsViewModel>
     </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="IsSelected" Value="{Binding Content.IsSelected, Mode=TwoWay, RelativeSource={RelativeSource Self}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Opacity" Value="0.5" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Trigger.Setters>
+                        <Setter Property="Opacity" Value="1.0" />
+                    </Trigger.Setters>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     
     <Grid>
-        <Label Margin="300, 200"
-               Content="SettingsView"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center">
-            
-        </Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListBox Margin="40, 40" Height="200" VerticalAlignment="Top" 
+                 SelectedIndex="{Binding ThemeIndex}"
+                 ItemsSource="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=Themes, UpdateSourceTrigger=PropertyChanged}"
+                 cal:Message.Attach="[Event SelectionChanged] = [Action ChangeThemeList] ; [Event MouseDoubleClick] = [Action RemoveTheme]">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Label Content = "{Binding Name}"/>
+                        <Rectangle Width="10" Height="10" Margin="5" Fill="{Binding SlideBarBackground}"></Rectangle>
+                        <Rectangle Width="10" Height="10" Margin="5" Fill="{Binding WindowBackgroundColor1}"></Rectangle>
+                        <Rectangle Width="10" Height="10" Margin="5" Fill="{Binding WindowBackgroundColor2}"></Rectangle>
+                        <Rectangle Width="10" Height="10" Margin="5" Fill="{Binding NavigationButtonColor}"></Rectangle>
+                        <Rectangle Width="10" Height="10" Margin="5" Fill="{Binding NavigationButtonPressedColor}"></Rectangle>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
