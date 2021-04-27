@@ -138,8 +138,8 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        
-        <ContentControl Grid.Column = "1" Content="{Binding CurrentView}"></ContentControl>
+
+        <ContentControl Grid.Column = "1" Content="{Binding Source={x:Static singleton:ViewSingleton.Instance}, Path=CurrentView, UpdateSourceTrigger=PropertyChanged}"></ContentControl>
         
     </Grid>
 
