@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using DungeonCloud.Models.Files;
 
 namespace DungeonCloud.Models
 {
@@ -13,8 +14,9 @@ namespace DungeonCloud.Models
 
         public string UserSub { get; set; }
 
-        public string Dir { get; set; }
+        public DungeonDirectoryInfo Dir { get; set; }
 
         public UserDirectory() { }
+      
     }
 }

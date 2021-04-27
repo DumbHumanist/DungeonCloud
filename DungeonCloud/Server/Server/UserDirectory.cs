@@ -17,7 +17,7 @@ namespace Server
         [Key]
         public string UserSub { get; set; }
 
-        public string Dir { get; set; }
+        public DungeonDirectoryInfo Dir { get; set; }
 
         public UserDirectory() { }
     }
