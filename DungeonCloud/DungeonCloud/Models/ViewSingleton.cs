@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace DungeonCloud.Models
 {
@@ -30,7 +31,17 @@ namespace DungeonCloud.Models
             get => currentView;
         }
 
+        private ImageSource image;
 
+        public ImageSource Image
+        {
+            set
+            {
+                image = value;
+                NotifyOfPropertyChange();
+            }
+            get => image;
+        }
 
 
         private ViewSingleton() { }
