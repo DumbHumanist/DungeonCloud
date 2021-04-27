@@ -16,19 +16,7 @@ namespace DungeonCloud.ViewModels {
     public class ShellViewModel : Caliburn.Micro.PropertyChangedBase, IShell 
     {
 
-        IUserView mainView = new UserSpaceView();
-        IUserView settingsView = new SettingsView();
-        IUserView registrationView = new RegistrationView();
-        IUserView currentView;
-        public IUserView CurrentView
-        {
-            set
-            {
-                currentView = value;
-                NotifyOfPropertyChange();
-            }
-            get => currentView;
-        }
+       
         private int navigationBarWidth = 40;
         public int NavigationBarWidth
         {
@@ -117,7 +105,7 @@ namespace DungeonCloud.ViewModels {
         public ShellViewModel()
         {
             Dir = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
-            currentView = registrationView;
+            ViewSingleton.Instance.currentView = ViewSingleton.Instance.registrationView;
 
             ThemeSingleton.Instance.LoadThemes();
 
@@ -136,21 +124,21 @@ namespace DungeonCloud.ViewModels {
 
         public void MainButtonPressed()
         {
-            CurrentView = mainView;
+            ViewSingleton.Instance.CurrentView = ViewSingleton.Instance.mainView;
             ThemeSingleton.Instance.MainImage = ThemeSingleton.Instance.MainImagePressed;
             ThemeSingleton.Instance.SettingsImage = ThemeSingleton.Instance.SettingsImageDefault;
             ThemeSingleton.Instance.RegImage = ThemeSingleton.Instance.RegImageDefault;
         }
         public void SettingsButtonPressed()
         {
-            CurrentView = settingsView;
+            ViewSingleton.Instance.CurrentView = ViewSingleton.Instance.settingsView;
             ThemeSingleton.Instance.MainImage = ThemeSingleton.Instance.MainImageDefault;
             ThemeSingleton.Instance.SettingsImage = ThemeSingleton.Instance.SettingsImagePressed;
             ThemeSingleton.Instance.RegImage = ThemeSingleton.Instance.RegImageDefault;
         }
         public void RegButtonPressed()
         {
-            CurrentView = registrationView;
+            ViewSingleton.Instance.CurrentView = ViewSingleton.Instance.registrationView;
             ThemeSingleton.Instance.MainImage = ThemeSingleton.Instance.MainImageDefault;
             ThemeSingleton.Instance.SettingsImage = ThemeSingleton.Instance.SettingsImageDefault;
             ThemeSingleton.Instance.RegImage = ThemeSingleton.Instance.RegImagePressed;
