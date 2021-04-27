@@ -8,8 +8,8 @@ namespace Server
 {
     class DungeonDirectoryInfo : DungeonInfo
     {
-        public List<DungeonDirectoryInfo> ChildrenFolders { get; set; }
-        public List<DungeonFileInfo> ChildrenFiles { get; set; }
+        public List<DungeonDirectoryInfo> ChildrenFolders { get; set; } = new List<DungeonDirectoryInfo>();
+        public List<DungeonFileInfo> ChildrenFiles { get; set; } = new List<DungeonFileInfo>();
         public DungeonDirectoryInfo() { }
     }
 }

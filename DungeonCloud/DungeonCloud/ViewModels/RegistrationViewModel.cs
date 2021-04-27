@@ -19,26 +19,27 @@ namespace DungeonCloud.ViewModels
             await SessionSingleton.Instance.NM.StartAuthViaGoogle();
 
             UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.LoadFiles(SessionSingleton.Instance.NM.Session);
-            UserDirectorySingletone.Instance.CurrentDirectory = JsonConvert.DeserializeObject<DungeonDirectoryInfo>(UserDirectorySingletone.Instance.UD.Dir);
+            UserDirectorySingletone.Instance.CurrentDirectory = UserDirectorySingletone.Instance.UD.Dir;
 
-            Environment.CurrentDirectory =
+            string dir =
                 Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
 
-            foreach (DungeonInfo fsi in UserDirectorySingletone.Instance.CurrentDirectory.Children)
+            foreach (DungeonDirectoryInfo ddi in UserDirectorySingletone.Instance.CurrentDirectory.ChildrenFolders)
             {
-                if (Path.GetExtension(fsi.Path) == "")
-                    UserDirectorySingletone.Instance.DirAndFileCollection.Add(new FileSystemInfoExt()
-                    {
-                        ImageSource = Environment.CurrentDirectory + @"\folder-128.png",
-                        FSI = fsi
-                    });
+                UserDirectorySingletone.Instance.DirAndFileCollection.Add(new FileSystemInfoExt()
+                {
+                    ImageSource = dir + @"\folder-128.png",
+                    FSI = ddi
+                });
+            }
 
-                else
-                    UserDirectorySingletone.Instance.DirAndFileCollection.Add(new FileSystemInfoExt()
-                    {
-                        ImageSource = Environment.CurrentDirectory + @"\file-128.png",
-                        FSI = fsi
-                    });
+            foreach (DungeonFileInfo dfi in UserDirectorySingletone.Instance.CurrentDirectory.ChildrenFiles)
+            {
+                UserDirectorySingletone.Instance.DirAndFileCollection.Add(new FileSystemInfoExt()
+                {
+                    ImageSource = dir + @"\file-128.png",
+                    FSI = dfi
+                });
             }
         }
     }
