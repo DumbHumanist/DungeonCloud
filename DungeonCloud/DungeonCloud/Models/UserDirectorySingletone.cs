@@ -29,9 +29,6 @@ namespace DungeonCloud.Models
 
         public DirectoryInfo CurrentDirectory
         {
-<<<<<<< HEAD
-            get =>  JsonConvert.DeserializeObject<DirectoryInfo>(UD.Dir, settings);
-=======
             get { return currentDirectory; }
             set
             {
@@ -64,7 +61,6 @@ namespace DungeonCloud.Models
                         FSI = fsi
                     });
             }
->>>>>>> main
         }
 
         private UserDirectorySingletone()
