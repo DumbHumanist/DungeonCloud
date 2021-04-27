@@ -36,7 +36,7 @@ namespace DungeonCloud.ViewModels
         {
             try
             {
-                UserDirectorySingletone.Instance.CurrentDirectory = UserDirectorySingletone.Instance.CurrentDirectory.Parent;
+                UserDirectorySingletone.Instance.CurrentDirectory = UserDirectorySingletone.Instance.CurrentDirectory.GetParent();
             }
             catch
             {
@@ -50,7 +50,7 @@ namespace DungeonCloud.ViewModels
             {
                 if (Path.GetExtension(SelectedItem.FSI.Path) == "")
                 {
-                    DungeonDirectoryInfo SubDir = new DungeonDirectoryInfo(SelectedItem.FSI.Path);
+                    DungeonDirectoryInfo SubDir = UserDirectorySingletone.Instance.CurrentDirectory.GetChildByName(SelectedItem.FSI.Name);
                     UserDirectorySingletone.Instance.CurrentDirectory = SubDir;
                 }
                 else //if(Path.GetExtension(SelectedItem.FSI.FullName) == ".txt")

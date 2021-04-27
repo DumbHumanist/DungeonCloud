@@ -37,24 +37,25 @@ namespace DungeonCloud.Models
         {
             DirAndFileCollection.Clear();
             DirAndFileCollection = new ObservableCollection<FileSystemInfoExt>();
-            Environment.CurrentDirectory =
+            string dr =
                 Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
 
-            foreach (DungeonInfo fsi in CurrentDirectory.Children)
+            foreach (DungeonDirectoryInfo ddi in CurrentDirectory.ChildrenFolders)
             {
-                if (Path.GetExtension(fsi.Path) == "")
-                    DirAndFileCollection.Add(new FileSystemInfoExt()
-                    {
-                        ImageSource = Environment.CurrentDirectory + @"\folder-128.png",
-                        FSI = fsi
-                    });
+                DirAndFileCollection.Add(new FileSystemInfoExt()
+                {
+                    ImageSource = dr + @"\folder-128.png",
+                    FSI = ddi
+                });
+            }
 
-                else
-                    DirAndFileCollection.Add(new FileSystemInfoExt()
-                    {
-                        ImageSource = Environment.CurrentDirectory + @"\file-128.png",
-                        FSI = fsi
-                    });
+            foreach (DungeonFileInfo dfi in CurrentDirectory.ChildrenFiles)
+            {
+                DirAndFileCollection.Add(new FileSystemInfoExt()
+                {
+                    ImageSource = dr + @"\file-128.png",
+                    FSI = dfi
+                });
             }
         }
 
@@ -62,7 +63,7 @@ namespace DungeonCloud.Models
         {
         }
 
-        private ObservableCollection<FileSystemInfoExt> dirAndFileCollection;
+        private ObservableCollection<FileSystemInfoExt> dirAndFileCollection = new ObservableCollection<FileSystemInfoExt>();
 
         public ObservableCollection<FileSystemInfoExt> DirAndFileCollection
         {
