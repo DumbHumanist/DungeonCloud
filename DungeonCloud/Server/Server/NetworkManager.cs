@@ -21,13 +21,6 @@ namespace Server
             Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             server.Bind(ep);
             server.Listen(5);
-            var settings = new JsonSerializerSettings
-            {
-                Converters = new List<JsonConverter>
-                    {
-                        new FileSystemInfoConverter()
-                    }
-            };
             Console.WriteLine("Server started...");
             while (true)
             {

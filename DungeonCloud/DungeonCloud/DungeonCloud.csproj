@@ -83,7 +83,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\AppBootstrapper.cs" />
-    <Compile Include="Infrastructure\FileSystemInfoConverter.cs" />
     <Compile Include="Infrastructure\HexToRGB.cs" />
     <Compile Include="Infrastructure\IShell.cs" />
     <Compile Include="Infrastructure\IUserView.cs" />

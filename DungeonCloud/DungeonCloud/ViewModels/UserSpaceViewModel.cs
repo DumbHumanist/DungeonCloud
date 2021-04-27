@@ -1,5 +1,6 @@
 ﻿using DungeonCloud.Infrastructure;
 using DungeonCloud.Models;
+using DungeonCloud.Models.Files;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,7 +30,6 @@ namespace DungeonCloud.ViewModels
 
         public UserSpaceViewModel()
         {
-
         }
 
         public void BackButtonClick()
@@ -48,9 +48,9 @@ namespace DungeonCloud.ViewModels
         {
             try
             {
-                if (Path.GetExtension(SelectedItem.FSI.FullName) == "")
+                if (Path.GetExtension(SelectedItem.FSI.Path) == "")
                 {
-                    DirectoryInfo SubDir = new DirectoryInfo(SelectedItem.FSI.FullName);
+                    DungeonDirectoryInfo SubDir = new DungeonDirectoryInfo(SelectedItem.FSI.Path);
                     UserDirectorySingletone.Instance.CurrentDirectory = SubDir;
                 }
                 else //if(Path.GetExtension(SelectedItem.FSI.FullName) == ".txt")
@@ -58,7 +58,7 @@ namespace DungeonCloud.ViewModels
                     //ProcessStartInfo startInfo = new ProcessStartInfo("IExplore.exe");
                     //startInfo.WindowStyle = ProcessWindowStyle.Minimized;
 
-                    Process.Start(SelectedItem.FSI.FullName);
+                    Process.Start(SelectedItem.FSI.Path);
                 }
 
             }
