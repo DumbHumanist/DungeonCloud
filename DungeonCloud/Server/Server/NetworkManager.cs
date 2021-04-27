@@ -40,11 +40,11 @@ namespace Server
                     fi.FileSize = j.Length;
                     fi.Name = j.Name;
                     fi.Path = path + "//" + j.Name;
-                    dungeonDirectoryInfoTemp.Children.Add(fi);
+                    dungeonDirectoryInfoTemp.ChildrenFiles.Add(fi);
                 }
                 foreach (var s in new DirectoryInfo(path).GetDirectories())
                 {
-                    dungeonDirectoryInfoTemp.Children.Add(GetUserDirectory(path+"//"+s.Name));
+                    dungeonDirectoryInfoTemp.ChildrenFolders.Add(GetUserDirectory(path+"//"+s.Name));
                 }
 
                 return dungeonDirectoryInfoTemp;
