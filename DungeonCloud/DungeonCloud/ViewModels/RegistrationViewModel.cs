@@ -1,5 +1,7 @@
 ﻿using DungeonCloud.Infrastructure;
 using DungeonCloud.Models;
+using DungeonCloud.Models.Files;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,15 +19,14 @@ namespace DungeonCloud.ViewModels
             await SessionSingleton.Instance.NM.StartAuthViaGoogle();
 
             UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.LoadFiles(SessionSingleton.Instance.NM.Session);
-            UserDirectorySingletone.Instance.CurrentDirectory = new DirectoryInfo(@"C:\Windows");
-                //JsonConvert.DeserializeObject<DirectoryInfo>(UD.Dir, settings);
+            UserDirectorySingletone.Instance.CurrentDirectory = JsonConvert.DeserializeObject<DungeonDirectoryInfo>(UserDirectorySingletone.Instance.UD.Dir);
 
             Environment.CurrentDirectory =
                 Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
 
-            foreach (FileSystemInfo fsi in UserDirectorySingletone.Instance.CurrentDirectory.GetFileSystemInfos())
+            foreach (DungeonInfo fsi in UserDirectorySingletone.Instance.CurrentDirectory.Children)
             {
-                if (Path.GetExtension(fsi.FullName) == "")
+                if (Path.GetExtension(fsi.Path) == "")
                     UserDirectorySingletone.Instance.DirAndFileCollection.Add(new FileSystemInfoExt()
                     {
                         ImageSource = Environment.CurrentDirectory + @"\folder-128.png",
