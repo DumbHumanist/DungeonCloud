@@ -48,37 +48,7 @@ namespace DungeonCloud.ViewModels {
 
         string Dir;
 
-        string settingsImage;
-        public string SettingsImage
-        {
-            set
-            {
-                settingsImage = value;
-                NotifyOfPropertyChange();
-            }
-            get => settingsImage;
-        }
-
-        string mainImage;
-        public string MainImage
-        {
-            set
-            {
-                mainImage = value;
-                NotifyOfPropertyChange();
-            }
-            get => mainImage;
-        }
-        string regImage;
-        public string RegImage
-        {
-            set
-            {
-                regImage = value;
-                NotifyOfPropertyChange();
-            }
-            get => regImage;
-        }
+        
 
         bool canNavigation = true;
         public bool CanNavigation
@@ -151,9 +121,10 @@ namespace DungeonCloud.ViewModels {
 
             ThemeSingleton.Instance.LoadThemes();
 
-            MainImage = Dir + "\\Processed\\main.png";
-            SettingsImage = Dir + "\\Processed\\settings.png";
-            RegImage = Dir + "\\Processed\\reg.png";
+            
+            ThemeSingleton.Instance.MainImage = ThemeSingleton.Instance.MainImagePressed;
+            ThemeSingleton.Instance.SettingsImage = ThemeSingleton.Instance.SettingsImageDefault;
+            ThemeSingleton.Instance.RegImage = ThemeSingleton.Instance.RegImageDefault;
 
         }
 
@@ -166,23 +137,23 @@ namespace DungeonCloud.ViewModels {
         public void MainButtonPressed()
         {
             CurrentView = mainView;
-            MainImage = Dir + "\\Processed\\main-pressed.png";
-            SettingsImage = Dir + "\\Processed\\settings.png";
-            RegImage = Dir + "\\Processed\\reg.png";
+            ThemeSingleton.Instance.MainImage = ThemeSingleton.Instance.MainImagePressed;
+            ThemeSingleton.Instance.SettingsImage = ThemeSingleton.Instance.SettingsImageDefault;
+            ThemeSingleton.Instance.RegImage = ThemeSingleton.Instance.RegImageDefault;
         }
         public void SettingsButtonPressed()
         {
             CurrentView = settingsView;
-            MainImage = Dir + "\\Processed\\main.png";
-            SettingsImage = Dir + "\\Processed\\settings-pressed.png";
-            RegImage = Dir + "\\Processed\\reg.png";
+            ThemeSingleton.Instance.MainImage = ThemeSingleton.Instance.MainImageDefault;
+            ThemeSingleton.Instance.SettingsImage = ThemeSingleton.Instance.SettingsImagePressed;
+            ThemeSingleton.Instance.RegImage = ThemeSingleton.Instance.RegImageDefault;
         }
         public void RegButtonPressed()
         {
             CurrentView = registrationView;
-            MainImage = Dir + "\\Processed\\main.png";
-            SettingsImage = Dir + "\\Processed\\settings.png";
-            RegImage = Dir + "\\Processed\\reg-pressed.png";
+            ThemeSingleton.Instance.MainImage = ThemeSingleton.Instance.MainImageDefault;
+            ThemeSingleton.Instance.SettingsImage = ThemeSingleton.Instance.SettingsImageDefault;
+            ThemeSingleton.Instance.RegImage = ThemeSingleton.Instance.RegImagePressed;
         }
 
         //

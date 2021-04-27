@@ -26,7 +26,7 @@ namespace DungeonCloud.Models
 
         public DirectoryInfo Dir
         {
-            get => JsonConvert.DeserializeObject<DirectoryInfo>(UD.Dir, settings);
+            get =>  JsonConvert.DeserializeObject<DirectoryInfo>(UD.Dir, settings);
         }
 
         private UserDirectorySingletone()
