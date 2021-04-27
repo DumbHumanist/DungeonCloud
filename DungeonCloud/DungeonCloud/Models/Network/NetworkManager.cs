@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using DungeonCloud.Infrastructure;
 using System.Diagnostics.Eventing.Reader;
+using DungeonCloud.Models.Files;
 
 namespace DungeonCloud.Models.Network
 {
@@ -61,7 +62,7 @@ namespace DungeonCloud.Models.Network
             }
         }
 
-        public UserDirectory UploadNewFile(UserDirectory userDirectory, FileInfo fileToUpload,string pathToFileFromUserDirectory)
+        public UserDirectory UploadNewFile(UserDirectory userDirectory, DungeonFileInfo fileToUpload,string pathToFileFromUserDirectory, string localPath)
         {
             string serverIP = "127.0.0.1";
             int serverPort = 23737;
@@ -69,7 +70,7 @@ namespace DungeonCloud.Models.Network
             Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             client.Connect(ep);
             client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(new Package(1, userDirectory, this.Session, fileToUpload, pathToFileFromUserDirectory))}"));
-            client.SendFile(fileToUpload.FullName);
+            client.SendFile(localPath+"//"+fileToUpload.Name);
             byte[] bytes = new byte[500000];
             client.Receive(bytes);
             string data = Encoding.Default.GetString(bytes);

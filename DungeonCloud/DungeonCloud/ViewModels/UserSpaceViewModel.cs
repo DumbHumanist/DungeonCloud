@@ -13,30 +13,6 @@ namespace DungeonCloud.ViewModels
 {
     class UserSpaceViewModel : Caliburn.Micro.PropertyChangedBase
     {
-        private DirectoryInfo currentDirectory;
-
-        public DirectoryInfo CurrentDirectory
-        {
-            get { return currentDirectory; }
-            set
-            {
-                currentDirectory = value;
-                CollectionRefresh();
-                NotifyOfPropertyChange();
-            }
-        }
-
-        private ObservableCollection<FileSystemInfoExt> dirAndFileCollection;
-
-        public ObservableCollection<FileSystemInfoExt> DirAndFileCollection
-        {
-            get { return dirAndFileCollection; }
-            set 
-            {
-                dirAndFileCollection = value;
-                NotifyOfPropertyChange();
-            }
-        }
 
         private FileSystemInfoExt selectedItem;
 
@@ -53,38 +29,18 @@ namespace DungeonCloud.ViewModels
 
         public UserSpaceViewModel()
         {
+
+        }
+
+        public void BackButtonClick()
+        {
             try
             {
-                CurrentDirectory = UserDirectorySingletone.Instance.Dir;
+                UserDirectorySingletone.Instance.CurrentDirectory = UserDirectorySingletone.Instance.CurrentDirectory.Parent;
             }
             catch
             {
-
-            }
-        }
-
-        private void CollectionRefresh()
-        {
-            DirAndFileCollection.Clear();
-            DirAndFileCollection = new ObservableCollection<FileSystemInfoExt>();
-            Environment.CurrentDirectory =
-                Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
-
-            foreach (FileSystemInfo fsi in CurrentDirectory.GetFileSystemInfos())
-            {
-                if (Path.GetExtension(fsi.FullName) == "")
-                    DirAndFileCollection.Add(new FileSystemInfoExt()
-                    {
-                        ImageSource = Environment.CurrentDirectory + @"\folder-128.png",
-                        FSI = fsi
-                    });
-
-                else
-                    DirAndFileCollection.Add(new FileSystemInfoExt()
-                    {
-                        ImageSource = Environment.CurrentDirectory + @"\file-128.png",
-                        FSI = fsi
-                    });
+                return;
             }
         }
 
@@ -95,7 +51,7 @@ namespace DungeonCloud.ViewModels
                 if (Path.GetExtension(SelectedItem.FSI.FullName) == "")
                 {
                     DirectoryInfo SubDir = new DirectoryInfo(SelectedItem.FSI.FullName);
-                    CurrentDirectory = SubDir;
+                    UserDirectorySingletone.Instance.CurrentDirectory = SubDir;
                 }
                 else //if(Path.GetExtension(SelectedItem.FSI.FullName) == ".txt")
                 {
