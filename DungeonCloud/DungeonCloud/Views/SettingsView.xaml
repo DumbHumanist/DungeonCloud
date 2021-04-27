@@ -46,6 +46,8 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <ListBox Margin="40, 40, 40, 5" Height="200" VerticalAlignment="Top" 
+                     Background="Transparent"
+                     BorderThickness="0"
                      SelectedIndex="{Binding ThemeIndex}"
                      ItemsSource="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=Themes, UpdateSourceTrigger=PropertyChanged}"
                      cal:Message.Attach="[Event SelectionChanged] = [Action ChangeThemeList] ; [Event MouseDoubleClick] = [Action RemoveTheme]">
