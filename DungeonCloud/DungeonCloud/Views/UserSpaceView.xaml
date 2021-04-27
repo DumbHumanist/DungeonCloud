@@ -20,13 +20,16 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="17*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <TextBox
                 Grid.Row="0" 
-                Text="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=CurrentDirectory.FullName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=CurrentDirectory.Path, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 Background="Transparent"
-                IsReadOnly="True">
+                IsReadOnly="True"
+                TextAlignment="Left">
             </TextBox>
 
             <Button 
@@ -53,7 +56,7 @@
 
                             <Image Source="{Binding ImageSource}" Grid.Column="0"></Image>
                             <TextBlock Text="{Binding FSI.Name}" Grid.Column="1"></TextBlock>
-                            <Button Grid.Column="2"></Button>
+                            <Button Grid.Column="2" Width="100" Height="70" Content="Download"></Button>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -8,6 +8,7 @@ using DungeonCloud.Infrastructure;
 using System.IO;
 using System.Windows;
 using System.Collections.ObjectModel;
+using DungeonCloud.Models.Files;
 
 namespace DungeonCloud.Models
 {
@@ -17,17 +18,11 @@ namespace DungeonCloud.Models
 
         private UserDirectory uD;
 
-        private FileSystemInfoConverter settings;
+        public UserDirectory UD { get; set; }
 
-        public UserDirectory UD
-        {
-            get => uD;
-            set => uD = value;
-        }
+        private DungeonDirectoryInfo currentDirectory;
 
-        private DirectoryInfo currentDirectory;
-
-        public DirectoryInfo CurrentDirectory
+        public DungeonDirectoryInfo CurrentDirectory
         {
             get { return currentDirectory; }
             set
@@ -42,33 +37,33 @@ namespace DungeonCloud.Models
         {
             DirAndFileCollection.Clear();
             DirAndFileCollection = new ObservableCollection<FileSystemInfoExt>();
-            Environment.CurrentDirectory =
+            string dr =
                 Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
 
-            foreach (FileSystemInfo fsi in CurrentDirectory.GetFileSystemInfos())
+            foreach (DungeonDirectoryInfo ddi in CurrentDirectory.ChildrenFolders)
             {
-                if (Path.GetExtension(fsi.FullName) == "")
-                    DirAndFileCollection.Add(new FileSystemInfoExt()
-                    {
-                        ImageSource = Environment.CurrentDirectory + @"\folder-128.png",
-                        FSI = fsi
-                    });
+                DirAndFileCollection.Add(new FileSystemInfoExt()
+                {
+                    ImageSource = dr + @"\folder-128.png",
+                    FSI = ddi
+                });
+            }
 
-                else
-                    UserDirectorySingletone.Instance.DirAndFileCollection.Add(new FileSystemInfoExt()
-                    {
-                        ImageSource = Environment.CurrentDirectory + @"\file-128.png",
-                        FSI = fsi
-                    });
+            foreach (DungeonFileInfo dfi in CurrentDirectory.ChildrenFiles)
+            {
+                DirAndFileCollection.Add(new FileSystemInfoExt()
+                {
+                    ImageSource = dr + @"\file-128.png",
+                    FSI = dfi
+                });
             }
         }
 
         private UserDirectorySingletone()
         {
-            settings = new FileSystemInfoConverter();
         }
 
-        private ObservableCollection<FileSystemInfoExt> dirAndFileCollection;
+        private ObservableCollection<FileSystemInfoExt> dirAndFileCollection = new ObservableCollection<FileSystemInfoExt>();
 
         public ObservableCollection<FileSystemInfoExt> DirAndFileCollection
         {
