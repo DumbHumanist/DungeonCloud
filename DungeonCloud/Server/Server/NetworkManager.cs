@@ -95,7 +95,7 @@ namespace Server
                         using (var stream = new NetworkStream(client))
                         using (var output = File.Create($"{reqPackage.Path}\\{reqPackage.FileTransfer.Name}"))
                         {
-                            var buffer = new byte[(reqPackage.FileTransfer as DungeonFileInfo).FileSize];
+                            var buffer = new byte[reqPackage.FileTransfer.FileSize];
                             int bytesRead;
                             while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                             {

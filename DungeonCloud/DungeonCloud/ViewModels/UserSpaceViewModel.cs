@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Syroot.Windows.IO;
 using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 
 namespace DungeonCloud.ViewModels
 {
@@ -63,12 +65,15 @@ namespace DungeonCloud.ViewModels
                     UserDirectorySingletone.Instance.CurrentDirectory = SubDir;
                    
                 }
-                else //if(Path.GetExtension(SelectedItem.FSI.FullName) == ".txt")
+                else if(Path.GetExtension(SelectedItem.FSI.Name) == ".png")
                 {
-                    //ProcessStartInfo startInfo = new ProcessStartInfo("IExplore.exe");
-                    //startInfo.WindowStyle = ProcessWindowStyle.Minimized;
-
-                    Process.Start(SelectedItem.FSI.Path);
+                    DownloadButtonClick();
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(@"C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Water Lilies.jpg");
+                    bitmap.EndInit();
+                    ThemeSingleton.Instance.Image = bitmap;
+                    ViewSingleton.Instance.CurrentView = ViewSingleton.Instance.imageView; 
                 }
 
             }
@@ -92,9 +97,53 @@ namespace DungeonCloud.ViewModels
             }
         }
 
-        public void UploadButtonClick()
+        public async void UploadButtonClick()
         {
+            string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
+            string filePath;
 
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "All files (*.*)|*.*";
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+                }
+                else
+                    return;
+            }
+
+            FileInfo fileInfoForHumans = new FileInfo(filePath);
+
+            DungeonFileInfo fileInfo = new DungeonFileInfo()
+            {
+                Path = fileInfoForHumans.FullName,
+                Name = fileInfoForHumans.Name,
+                FileSize = fileInfoForHumans.Length
+            };
+
+            string pathFromRoot;
+
+            try
+            {
+                pathFromRoot =
+                    UserDirectorySingletone.Instance.CurrentDirectory.Path.Substring(
+                        UserDirectorySingletone.Instance.CurrentDirectory.Path.IndexOf('\\'));
+            }
+            catch
+            {
+                pathFromRoot = "";
+            }
+
+            await Task.Factory.StartNew(() =>
+            SessionSingleton.Instance.NM.UploadNewFile(UserDirectorySingletone.Instance.UD,
+                fileInfo,
+                pathFromRoot,
+                filePath));
         }
     }
 }
