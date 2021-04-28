@@ -37,13 +37,20 @@
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, UpdateSourceTrigger=PropertyChanged}"/>
         </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.NavigationButtonPressedColor, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Foreground" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="BorderBrush" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.NavigationButtonColor, UpdateSourceTrigger=PropertyChanged}"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.NavigationButtonPressedColor, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Foreground" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="BorderBrush" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.NavigationButtonColor, UpdateSourceTrigger=PropertyChanged}"/>
+        </Style>
+        
     </UserControl.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
         <StackPanel>
             <ListBox Margin="40, 40, 40, 5" Height="200" VerticalAlignment="Top" 
                      Background="Transparent"
@@ -65,32 +72,31 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <StackPanel Orientation="Horizontal" Height="20" Margin="40, 5">
-                <TextBox Width ="150" Background="White" FontWeight="ExtraBold" Text="{Binding Name}"></TextBox>
+                <TextBox Width ="150" FontWeight="ExtraBold" Text="{Binding Name}"></TextBox>
                 <Label Content="Name" FontSize="16" Margin="0,-7,0,-4" FontWeight="ExtraBold"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="20" Margin="40, 5">
-                <TextBox Width ="150" Background="White" FontWeight="ExtraBold" Text="{Binding SlideBarBackground}"></TextBox>
+                <TextBox Width ="150" FontWeight="ExtraBold" Text="{Binding SlideBarBackground}"></TextBox>
                 <Label Content="Panel and Text" FontSize="16" Margin="0,-7,0,-4" FontWeight="ExtraBold"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="20" Margin="40, 5">
-                <TextBox Width ="150" Background="White" FontWeight="ExtraBold" Text="{Binding WindowBackgroundColor1}"></TextBox>
+                <TextBox Width ="150" FontWeight="ExtraBold" Text="{Binding WindowBackgroundColor1}"></TextBox>
                 <Label Content="Gradient color 1" FontSize="16" Margin="0,-7,0,-4" FontWeight="ExtraBold"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="20" Margin="40, 5">
-                <TextBox Width ="150" Background="White" FontWeight="ExtraBold" Text="{Binding WindowBackgroundColor2}"></TextBox>
+                <TextBox Width ="150" FontWeight="ExtraBold" Text="{Binding WindowBackgroundColor2}"></TextBox>
                 <Label Content="Gradient color 2" FontSize="16" Margin="0,-7,0,-4" FontWeight="ExtraBold"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="20" Margin="40, 5">
-                <TextBox Width ="150" Background="White" FontWeight="ExtraBold" Text="{Binding NavigationButtonColor}"></TextBox>
+                <TextBox Width ="150" FontWeight="ExtraBold" Text="{Binding NavigationButtonColor}"></TextBox>
                 <Label Content="Button color" FontSize="16" Margin="0,-7,0,-4" FontWeight="ExtraBold"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="20" Margin="40, 5">
-                <TextBox Width ="150" Background="White" FontWeight="ExtraBold" Text="{Binding NavigationButtonPressedColor}"></TextBox>
+                <TextBox Width ="150" FontWeight="ExtraBold" Text="{Binding NavigationButtonPressedColor}"></TextBox>
                 <Label Content="Pressed button color" FontSize="16" Margin="0,-7,0,-4" FontWeight="ExtraBold"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="20" Margin="40, 5">
-                <Button Height="20" Width="150" HorizontalAlignment="Left" Background="White" FontWeight="ExtraBold"
-                        Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=Themes, UpdateSourceTrigger=PropertyChanged}"
+                <Button Height="20" Width="150" HorizontalAlignment="Left" FontWeight="ExtraBold"
                         cal:Message.Attach="[Event Click] = [Action AddTheme]">Add</Button>
                 <Label Content="Add Theme" FontSize="16" Margin="0,-7,0,-4" FontWeight="ExtraBold"/>
             </StackPanel>
