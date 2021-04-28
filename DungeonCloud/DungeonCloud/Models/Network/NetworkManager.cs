@@ -104,6 +104,32 @@ namespace DungeonCloud.Models.Network
             return JsonConvert.DeserializeObject<UserDirectory>(data);
         }
 
+        public UserDirectory CreateNewFolder(UserDirectory userDirectory, string pathToFileFromUserDirectory)
+        {
+            string serverIP = "127.0.0.1";
+            int serverPort = 23737;
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
+            Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            client.Connect(ep);
+            client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(new Package(4, userDirectory, pathToFileFromUserDirectory))}"));
+            byte[] buf = new byte[500000];
+            client.Receive(buf);
+            string data = Encoding.Default.GetString(buf);
+            return JsonConvert.DeserializeObject<UserDirectory>(data);
+        }
+        public UserDirectory DeleteFilder(UserDirectory userDirectory, string pathToFileFromUserDirectory)
+        {
+            string serverIP = "127.0.0.1";
+            int serverPort = 23737;
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
+            Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            client.Connect(ep);
+            client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(new Package(5, userDirectory, pathToFileFromUserDirectory))}"));
+            byte[] buf = new byte[500000];
+            client.Receive(buf);
+            string data = Encoding.Default.GetString(buf);
+            return JsonConvert.DeserializeObject<UserDirectory>(data);
+        }
 
 
         const string clientId = "737979910974-gmk92cjm195r8mjk1i83tajo1ue5j4f6.apps.googleusercontent.com";

@@ -80,7 +80,7 @@ namespace Server
                         {
                             UserDirectory tmp = new UserDirectory();
                             tmp.UserSub = reqPackage.Sub;
-                            Directory.CreateDirectory(Directory.GetCurrentDirectory() + "//" + reqPackage.Sub);
+                            Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + reqPackage.Sub);
                             tmp.Dir = GetUserDirectory(reqPackage.Sub);
                             db.UserDirectories.AddOrUpdate(tmp);
                             db.SaveChanges();
@@ -116,7 +116,7 @@ namespace Server
 
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.Sub;
-                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "//" + reqPackage.Sub);
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + reqPackage.Sub);
                         tmp.Dir = GetUserDirectory(reqPackage.Sub);
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
@@ -127,6 +127,38 @@ namespace Server
                 {
                     string str = $"{reqPackage.UserDirectory.UserSub}\\{reqPackage.Path}";
                     client.SendFile(str);
+                }
+                else if (reqPackage.Type == 4)
+                {
+                    using (UserDirectoryContext db = new UserDirectoryContext())
+                    {
+
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + reqPackage.Sub +"\\" +reqPackage.Path);
+
+                        UserDirectory tmp = new UserDirectory();
+                        tmp.UserSub = reqPackage.Sub;
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + reqPackage.Sub);
+                        tmp.Dir = GetUserDirectory(reqPackage.Sub);
+                        db.UserDirectories.AddOrUpdate(tmp);
+                        db.SaveChanges();
+                        client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
+                    }
+                }
+                else if (reqPackage.Type == 5)
+                {
+                    using (UserDirectoryContext db = new UserDirectoryContext())
+                    {
+
+                        new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + reqPackage.Sub + "\\" + reqPackage.Path).Delete(true);
+
+                        UserDirectory tmp = new UserDirectory();
+                        tmp.UserSub = reqPackage.Sub;
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + reqPackage.Sub);
+                        tmp.Dir = GetUserDirectory(reqPackage.Sub);
+                        db.UserDirectories.AddOrUpdate(tmp);
+                        db.SaveChanges();
+                        client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
+                    }
                 }
 
                 client.Shutdown(SocketShutdown.Both);
