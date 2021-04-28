@@ -55,8 +55,11 @@ namespace DungeonCloud.ViewModels
             }
         }
 
-        public void SelectedItemDoubleClick()
+        public async void SelectedItemDoubleClick()
         {
+            string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
+            downloadsPath += ("\\" + SelectedItem.FSI.Name); 
+
             try
             {
                 if (Path.GetExtension(SelectedItem.FSI.Path) == "")
@@ -67,10 +70,19 @@ namespace DungeonCloud.ViewModels
                 }
                 else if(Path.GetExtension(SelectedItem.FSI.Name) == ".png")
                 {
-                    DownloadButtonClick();
+                    int fileSize = Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Name == SelectedItem.FSI.Name).FirstOrDefault().FileSize);
+
+                    byte[] fileBytes = await Task<byte[]>.Run(() =>
+                    SessionSingleton.Instance.NM.DownloadFile(UserDirectorySingletone.Instance.UD,
+                    SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')),
+                    fileSize));
+
+                    await Task.Factory.StartNew(() => File.WriteAllBytes(downloadsPath, fileBytes));
+
+
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(@"C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Water Lilies.jpg");
+                    bitmap.UriSource = new Uri(downloadsPath);
                     bitmap.EndInit();
                     ThemeSingleton.Instance.Image = bitmap;
                     ViewSingleton.Instance.CurrentView = ViewSingleton.Instance.imageView; 
@@ -86,12 +98,13 @@ namespace DungeonCloud.ViewModels
         public async void DownloadButtonClick()
         {
             if (SelectedItem != null)            
-            {
+            { 
+                int fileSize = Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Name == SelectedItem.FSI.Name).FirstOrDefault().FileSize);
                 string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
                 byte[] fileBytes = await Task<byte[]>.Run(() =>
                 SessionSingleton.Instance.NM.DownloadFile(UserDirectorySingletone.Instance.UD,
                 SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')),
-                Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Path == SelectedItem.FSI.Path).FirstOrDefault().FileSize)));
+                fileSize));
 
                 await Task.Factory.StartNew(() => File.WriteAllBytes(downloadsPath + '\\' + SelectedItem.FSI.Name, fileBytes));
             }
@@ -99,7 +112,6 @@ namespace DungeonCloud.ViewModels
 
         public async void UploadButtonClick()
         {
-            string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
             string filePath;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -131,8 +143,7 @@ namespace DungeonCloud.ViewModels
             try
             {
                 pathFromRoot =
-                    UserDirectorySingletone.Instance.CurrentDirectory.Path.Substring(
-                        UserDirectorySingletone.Instance.CurrentDirectory.Path.IndexOf('\\'));
+                    UserDirectorySingletone.Instance.CurrentDirectory.Path;
             }
             catch
             {
