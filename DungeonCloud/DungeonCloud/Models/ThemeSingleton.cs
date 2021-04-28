@@ -102,6 +102,41 @@ namespace DungeonCloud.Models
             get => regImage;
         }
 
+        //------ main page icons
+
+        ImageSource backImage;
+        public ImageSource BackImage
+        {
+            set
+            {
+                backImage = value;
+                NotifyOfPropertyChange();
+            }
+            get => backImage;
+        }
+        ImageSource downloadImage;
+        public ImageSource DownloadImage
+        {
+            set
+            {
+                downloadImage = value;
+                NotifyOfPropertyChange();
+            }
+            get => downloadImage;
+        }
+        ImageSource uploadImage;
+        public ImageSource UploadImage
+        {
+            set
+            {
+                uploadImage = value;
+                NotifyOfPropertyChange();
+            }
+            get => uploadImage;
+        }
+
+        //-------
+
         string Dir;
         public static ThemeSingleton Instance => instance ?? (instance = new ThemeSingleton());
 
