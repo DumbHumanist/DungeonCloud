@@ -19,6 +19,7 @@ namespace DungeonCloud.Models
         public IUserView settingsView = new SettingsView();
         public IUserView registrationView = new RegistrationView();
         public IUserView imageView = new ImageView();
+        public IUserView textView = new TextView();
 
 
 
