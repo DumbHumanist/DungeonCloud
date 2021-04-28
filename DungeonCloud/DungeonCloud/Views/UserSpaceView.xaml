@@ -12,16 +12,27 @@
     <UserControl.DataContext>
         <vm:UserSpaceViewModel></vm:UserSpaceViewModel>
     </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <Style x:Key="NavigationButton">
+            <Setter Property="Control.Margin" Value="2, 5, 2, 5"/>
+            <Setter Property="Control.BorderThickness" Value="0"/>
+            <Setter Property="Control.IsEnabled" Value="{Binding CanNavigation}"/>
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="17*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <TextBox
@@ -34,15 +45,28 @@
                 Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
 
-            <Button 
-                Width="200"
-                Margin="10,0,0,0"
-                HorizontalAlignment="Left"
-                Grid.Row="1"
-                Content="Back"
-                cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
-
+            <Button x:Name="ButtonBack" Style="{StaticResource NavigationButton}"
+                    Margin="15,0,0,0"
+                    Background="Transparent"
+                    HorizontalAlignment="Left"
+                    Grid.Row="1"
+                    cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=BackImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
+                </StackPanel>
             </Button>
+            <Button x:Name="ButtonUpload" Style="{StaticResource NavigationButton}"
+                    Margin="0,0,15,0"
+                    Background="Transparent"
+                    HorizontalAlignment="Right"
+                    Grid.Row="1"
+                    cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=UploadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
+                </StackPanel>
+            </Button>
+
+
 
             <ListView
                 Grid.Row="3" 
@@ -90,14 +114,6 @@
                 </ListView.ItemTemplate>
 
             </ListView>
-
-            <Button Content="Upload"
-                    Grid.Row="5"
-                    Width="200"
-                    Margin="10,0,0,0"
-                    HorizontalAlignment="Left">
-
-            </Button>
         </Grid>
     </Grid>
 </UserControl>
