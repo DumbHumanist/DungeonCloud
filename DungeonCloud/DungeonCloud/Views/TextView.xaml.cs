@@ -1,5 +1,4 @@
-﻿using DungeonCloud.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +16,11 @@ using System.Windows.Shapes;
 namespace DungeonCloud.Views
 {
     /// <summary>
-    /// Interaction logic for ImageView.xaml
+    /// Логика взаимодействия для TextView.xaml
     /// </summary>
-    public partial class ImageView : UserControl, IUserView
+    public partial class TextView : UserControl
     {
-        public ImageView()
+        public TextView()
         {
             InitializeComponent();
         }

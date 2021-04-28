@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace DungeonCloud.Views
 {
     /// <summary>
-    /// Interaction logic for ImageView.xaml
+    /// Логика взаимодействия для MediaView.xaml
     /// </summary>
-    public partial class ImageView : UserControl, IUserView
+    public partial class MediaView : UserControl, IUserView
     {
-        public ImageView()
+        public MediaView()
         {
             InitializeComponent();
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace DungeonCloud.Models
 {
@@ -17,6 +18,7 @@ namespace DungeonCloud.Models
         public IUserView mainView = new UserSpaceView();
         public IUserView settingsView = new SettingsView();
         public IUserView registrationView = new RegistrationView();
+        public IUserView imageView = new ImageView();
 
 
 
@@ -31,7 +33,7 @@ namespace DungeonCloud.Models
             get => currentView;
         }
 
-        private ImageSource image;
+        private ImageSource image = new BitmapImage();
 
         public ImageSource Image
         {
