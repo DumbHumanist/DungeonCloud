@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="Models\UserDirectorySingletone.cs" />
     <Compile Include="Models\ViewSingleton.cs" />
+    <Compile Include="ViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />

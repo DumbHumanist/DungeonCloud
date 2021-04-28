@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Syroot.Windows.IO;
+using System.Windows.Media.Imaging;
 
 namespace DungeonCloud.ViewModels
 {
@@ -55,12 +56,15 @@ namespace DungeonCloud.ViewModels
                     DungeonDirectoryInfo SubDir = UserDirectorySingletone.Instance.CurrentDirectory.GetChildByName(SelectedItem.FSI.Name);
                     UserDirectorySingletone.Instance.CurrentDirectory = SubDir;
                 }
-                else //if(Path.GetExtension(SelectedItem.FSI.FullName) == ".txt")
+                else if(Path.GetExtension(SelectedItem.FSI.Name) == ".png")
                 {
-                    //ProcessStartInfo startInfo = new ProcessStartInfo("IExplore.exe");
-                    //startInfo.WindowStyle = ProcessWindowStyle.Minimized;
-
-                    Process.Start(SelectedItem.FSI.Path);
+                    DownloadButtonClick();
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(@"C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Water Lilies.jpg");
+                    bitmap.EndInit();
+                    ThemeSingleton.Instance.Image = bitmap;
+                    ViewSingleton.Instance.CurrentView = ViewSingleton.Instance.imageView; 
                 }
 
             }
