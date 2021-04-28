@@ -55,14 +55,26 @@
                     <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=BackImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
                 </StackPanel>
             </Button>
+            
             <Button x:Name="ButtonUpload" Style="{StaticResource NavigationButton}"
                     Margin="0,0,15,0"
                     Background="Transparent"
                     HorizontalAlignment="Right"
                     Grid.Row="1"
-                    cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
+                    cal:Message.Attach="[Event Click] = [Action UploadButtonClick]">
                 <StackPanel>
                     <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=UploadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
+                </StackPanel>
+            </Button>
+            
+            <Button x:Name="ButtonDownload" Style="{StaticResource NavigationButton}"
+                    Margin="0,0,100,0"
+                    Background="Transparent"
+                    HorizontalAlignment="Right"
+                    Grid.Row="1"
+                    cal:Message.Attach="[Event Click] = [Action DownloadButtonClick]">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DownloadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
                 </StackPanel>
             </Button>
 
@@ -82,18 +94,6 @@
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0"
-                                    Width="100"
-                                    Height="70"
-                                    Margin="20,0,0,0"
-                                    Content="Download"
-                                    HorizontalAlignment="Right"
-                                    cal:Action.TargetWithoutContext="{Binding RelativeSource={
-                                                RelativeSource AncestorType=UserControl, 
-                                                Mode=FindAncestor}, 
-                                                Path=DataContext}" 
-                                    cal:Message.Attach="[Event Click] = [Action DownloadButtonClick]"></Button>
 
                             <Image Source="{Binding ImageSource}"
                                    Margin="20,0,0,0"

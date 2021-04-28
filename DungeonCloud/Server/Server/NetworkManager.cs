@@ -129,7 +129,8 @@ namespace Server
                 }
                 else if (reqPackage.Type == 2)
                 {
-                    client.SendFile($"{reqPackage.Sub}\\{reqPackage.Path}");
+                    string str = $"{reqPackage.UserDirectory.UserSub}\\{reqPackage.Path}";
+                    client.SendFile(str);
                 }
 
                 client.Shutdown(SocketShutdown.Both);

@@ -78,10 +78,7 @@ namespace DungeonCloud.ViewModels
             SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')),
             Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Path == SelectedItem.FSI.Path).FirstOrDefault().FileSize)));
 
-            using (Stream file = File.OpenWrite(downloadsPath + '\\' + SelectedItem.FSI.ToString()))
-            {
-                await file.WriteAsync(fileBytes, 0, fileBytes.Length);
-            }
+            await Task.Factory.StartNew(() => File.WriteAllBytes(downloadsPath + '\\' + SelectedItem.FSI.Name, fileBytes));
         }
 
         public void UploadButtonClick()
