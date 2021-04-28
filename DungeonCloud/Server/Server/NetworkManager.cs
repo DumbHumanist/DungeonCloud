@@ -112,12 +112,12 @@ namespace Server
                     using (UserDirectoryContext db = new UserDirectoryContext())
                     {
 
-                        File.Delete($"{reqPackage.Sub}\\{reqPackage.Path}");
+                        File.Delete($"{reqPackage.UserDirectory.UserSub}\\{reqPackage.Path}");
 
                         UserDirectory tmp = new UserDirectory();
-                        tmp.UserSub = reqPackage.Sub;
-                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + reqPackage.Sub);
-                        tmp.Dir = GetUserDirectory(reqPackage.Sub);
+                        tmp.UserSub = reqPackage.UserDirectory.UserSub;
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + reqPackage.UserDirectory.UserSub);
+                        tmp.Dir = GetUserDirectory(reqPackage.UserDirectory.UserSub);
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
                         client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(tmp)}"));
@@ -148,7 +148,9 @@ namespace Server
                     using (UserDirectoryContext db = new UserDirectoryContext())
                     {
 
-                        new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + reqPackage.Path).Delete(true);
+                        new DirectoryInfo(Directory.GetCurrentDirectory() +
+                            "\\" + reqPackage.UserDirectory.UserSub +
+                            "\\" + reqPackage.Path).Delete(true);
 
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.UserDirectory.UserSub;
