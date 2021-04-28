@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="DungeonCloud.Views.RegistrationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DungeonCloud.Views"
+             xmlns:vm="clr-namespace:DungeonCloud.ViewModels"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:singleton="clr-namespace:DungeonCloud.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.DataContext>
+        <vm:RegistrationViewModel></vm:RegistrationViewModel>
+    </UserControl.DataContext>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Grid.Column="1" Grid.Row="1" BorderBrush="Transparent" Background="Transparent" cal:Message.Attach = "[Event Click] = [Action AuthorizeWithChrome]">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" Height="120" Source="google.png" VerticalAlignment="Top"></Image>
+                <Viewbox Grid.Row="1" VerticalAlignment="Bottom">
+                    <TextBlock Text="Authorization via Google" Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                </Viewbox>
+            </Grid>
+            <Button.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="Border" 
+                      BorderThickness="1"
+                      Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}">
+                                    <ContentPresenter Margin="2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    RecognizesAccessKey="True"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        
+    </Grid>
+</UserControl>

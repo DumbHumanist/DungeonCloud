@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
-namespace DungeonCloud.Models
+namespace Server
 {
-    
-    [Serializable]
     class User
     {
         public string sub { get; set; }

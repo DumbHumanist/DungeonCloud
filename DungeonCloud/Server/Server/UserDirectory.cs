@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using DungeonCloud.Models.Files;
 
-namespace DungeonCloud.Models
+namespace Server
 {
+    [Table("UserDirectories")]
     class UserDirectory
     {
         public string DirectoryName { get; set; }
 
+        [Key]
         public string UserSub { get; set; }
 
         public DungeonDirectoryInfo Dir { get; set; }
 
         public UserDirectory() { }
-      
     }
 }
