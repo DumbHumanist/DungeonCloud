@@ -92,19 +92,15 @@ namespace Server
                 {
                     using (UserDirectoryContext db = new UserDirectoryContext())
                     {
-                        using (var stream = new NetworkStream(client))
-                        using (var output = File.Create($"{reqPackage.Path}\\{reqPackage.FileTransfer.Name}"))
-                        {
-                            var buffer = new byte[reqPackage.FileTransfer.FileSize];
-                            int bytesRead;
-                            while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                output.Write(buffer, 0, bytesRead);
-                            }
-                        }
+                        byte[] buf = new byte[reqPackage.FileTransfer.FileSize];
+                        client.Receive(buf);
+
+                        File.WriteAllBytes(reqPackage.Path + "\\" + reqPackage.FileTransfer.Name, buf);
+
+
                         UserDirectory tmp = new UserDirectory();
                         tmp.UserSub = reqPackage.Sub;
-                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "//" + reqPackage.Sub);
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + reqPackage.Sub);
                         tmp.Dir = GetUserDirectory(reqPackage.Sub);
                         db.UserDirectories.AddOrUpdate(tmp);
                         db.SaveChanges();
