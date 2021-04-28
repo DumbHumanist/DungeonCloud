@@ -31,6 +31,18 @@ namespace DungeonCloud.Models
             get => image;
         }
 
+        private string text = "";
+
+        public string Text
+        {
+            set
+            {
+                text = value;
+                NotifyOfPropertyChange();
+            }
+            get => text;
+        }
+
 
 
         public Theme CurrentTheme

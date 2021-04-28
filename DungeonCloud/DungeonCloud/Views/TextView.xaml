@@ -3,10 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:singleton="clr-namespace:DungeonCloud.Models"
              xmlns:local="clr-namespace:DungeonCloud.Views"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:vm="clr-namespace:DungeonCloud.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:TextViewModel></vm:TextViewModel>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style x:Key="BackButton">
+            <Setter Property="Control.Margin" Value="2, 5, 2, 5"/>
+            <Setter Property="Control.BorderThickness" Value="0"/>
+            <Setter Property="Control.IsEnabled" Value="{Binding CanNavigation}"/>
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <TextBox Background="Transparent" BorderThickness="0" TextWrapping="Wrap"
+                 Text="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+        <Canvas>
+            <Button Width="40" Height="40" Margin="15"
+                    Style="{StaticResource BackButton}"
+                    cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=BackImage, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </Button>
+        </Canvas>
     </Grid>
 </UserControl>
