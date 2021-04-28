@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace DungeonCloud.Models
 {
-    class ViewSingleton : PropertyChangedBase
+    public class ViewSingleton : PropertyChangedBase
     {
         private static ViewSingleton instance;
 
@@ -33,17 +33,6 @@ namespace DungeonCloud.Models
             get => currentView;
         }
 
-        private ImageSource image = new BitmapImage();
-
-        public ImageSource Image
-        {
-            set
-            {
-                image = value;
-                NotifyOfPropertyChange();
-            }
-            get => image;
-        }
 
 
         private ViewSingleton() { }
