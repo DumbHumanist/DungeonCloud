@@ -16,10 +16,18 @@ namespace DungeonCloud.ViewModels
     {
         public async void AuthorizeWithChrome()
         {
-            await SessionSingleton.Instance.NM.StartAuthViaGoogle();
+            try
+            {
+                await SessionSingleton.Instance.NM.StartAuthViaGoogle();
 
-            UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.LoadFiles(SessionSingleton.Instance.NM.Session);
-            UserDirectorySingletone.Instance.CurrentDirectory = UserDirectorySingletone.Instance.UD.Dir;
+                UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.LoadFiles(SessionSingleton.Instance.NM.Session);
+                UserDirectorySingletone.Instance.CurrentDirectory = UserDirectorySingletone.Instance.UD.Dir;
+            }
+            catch(Exception a) 
+            {
+                MessageBox.Show("Unable to reach the server", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
     }
 }

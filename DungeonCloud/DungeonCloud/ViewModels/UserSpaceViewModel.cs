@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Syroot.Windows.IO;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
@@ -30,17 +31,23 @@ namespace DungeonCloud.ViewModels
             }
         }
 
+       
+
+
 
         public UserSpaceViewModel()
         {
-
+            
         }
+
+
 
         public void BackButtonClick()
         {
             try
             {
                 UserDirectorySingletone.Instance.CurrentDirectory = UserDirectorySingletone.Instance.CurrentDirectory.GetParent();
+                
             }
             catch
             {
@@ -56,6 +63,7 @@ namespace DungeonCloud.ViewModels
                 {
                     DungeonDirectoryInfo SubDir = UserDirectorySingletone.Instance.CurrentDirectory.GetChildByName(SelectedItem.FSI.Name);
                     UserDirectorySingletone.Instance.CurrentDirectory = SubDir;
+                   
                 }
                 else if(Path.GetExtension(SelectedItem.FSI.Name) == ".png")
                 {
@@ -77,13 +85,16 @@ namespace DungeonCloud.ViewModels
 
         public async void DownloadButtonClick()
         {
-            string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
-            byte[] fileBytes = await Task<byte[]>.Run(() =>
-            SessionSingleton.Instance.NM.DownloadFile(UserDirectorySingletone.Instance.UD,
-            SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')),
-            Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Path == SelectedItem.FSI.Path).FirstOrDefault().FileSize)));
+            if (SelectedItem != null)            
+            {
+                string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
+                byte[] fileBytes = await Task<byte[]>.Run(() =>
+                SessionSingleton.Instance.NM.DownloadFile(UserDirectorySingletone.Instance.UD,
+                SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')),
+                Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Path == SelectedItem.FSI.Path).FirstOrDefault().FileSize)));
 
-            await Task.Factory.StartNew(() => File.WriteAllBytes(downloadsPath + '\\' + SelectedItem.FSI.Name, fileBytes));
+                await Task.Factory.StartNew(() => File.WriteAllBytes(downloadsPath + '\\' + SelectedItem.FSI.Name, fileBytes));
+            }
         }
 
         public async void UploadButtonClick()

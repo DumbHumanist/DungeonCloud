@@ -36,8 +36,22 @@ namespace DungeonCloud.Models
             get => currentDirectory;
             set
             {
+                
                 currentDirectory = value;
                 CollectionRefresh();
+                PathString = UserDirectorySingletone.Instance.CurrentDirectory.Path.Replace(SessionSingleton.Instance.NM.Session.sub, SessionSingleton.Instance.NM.Session.name);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private string pathString;
+
+        public string PathString
+        {
+            get { return pathString; }
+            set
+            {
+                pathString = value;
                 NotifyOfPropertyChange();
             }
         }
