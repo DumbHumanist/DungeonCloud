@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonCloud.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace DungeonCloud.Views
     /// <summary>
     /// Interaction logic for ImageView.xaml
     /// </summary>
-    public partial class ImageView : UserControl
+    public partial class ImageView : UserControl, IUserView
     {
         public ImageView()
         {

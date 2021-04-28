@@ -10,13 +10,14 @@ using System.Windows.Media;
 
 namespace DungeonCloud.Models
 {
-    class ViewSingleton : PropertyChangedBase
+    public class ViewSingleton : PropertyChangedBase
     {
         private static ViewSingleton instance;
 
         public IUserView mainView = new UserSpaceView();
         public IUserView settingsView = new SettingsView();
         public IUserView registrationView = new RegistrationView();
+        public IUserView imageView = new ImageView();
 
 
 
@@ -31,17 +32,6 @@ namespace DungeonCloud.Models
             get => currentView;
         }
 
-        private ImageSource image;
-
-        public ImageSource Image
-        {
-            set
-            {
-                image = value;
-                NotifyOfPropertyChange();
-            }
-            get => image;
-        }
 
 
         private ViewSingleton() { }
