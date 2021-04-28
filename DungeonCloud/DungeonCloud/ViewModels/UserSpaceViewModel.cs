@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Syroot.Windows.IO;
 
 namespace DungeonCloud.ViewModels
 {
@@ -30,6 +31,7 @@ namespace DungeonCloud.ViewModels
 
         public UserSpaceViewModel()
         {
+
         }
 
         public void BackButtonClick()
@@ -66,6 +68,25 @@ namespace DungeonCloud.ViewModels
             {
                 return;
             }
+        }
+
+        public async void DownloadButtonClick()
+        {
+            string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
+            byte[] fileBytes = await Task<byte[]>.Run(() =>
+            SessionSingleton.Instance.NM.DownloadFile(UserDirectorySingletone.Instance.UD,
+            SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')),
+            Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Path == SelectedItem.FSI.Path).FirstOrDefault().FileSize)));
+
+            using (Stream file = File.OpenWrite(downloadsPath + '\\' + SelectedItem.FSI.ToString()))
+            {
+                await file.WriteAsync(fileBytes, 0, fileBytes.Length);
+            }
+        }
+
+        public void UploadButtonClick()
+        {
+
         }
     }
 }

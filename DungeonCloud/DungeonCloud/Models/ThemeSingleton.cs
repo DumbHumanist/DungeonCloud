@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace DungeonCloud.Models
 {
@@ -14,6 +15,23 @@ namespace DungeonCloud.Models
     {
         static ThemeSingleton instance;
         public Theme currentTheme = new Theme();
+
+
+
+
+        private ImageSource image = new BitmapImage();
+
+        public ImageSource Image
+        {
+            set
+            {
+                image = value;
+                NotifyOfPropertyChange();
+            }
+            get => image;
+        }
+
+
 
         public Theme CurrentTheme
         {
