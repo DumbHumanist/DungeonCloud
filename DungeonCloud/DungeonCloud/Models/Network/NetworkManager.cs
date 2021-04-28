@@ -70,7 +70,7 @@ namespace DungeonCloud.Models.Network
             Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             client.Connect(ep);
             client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(new Package(1, userDirectory, this.Session, fileToUpload, pathToFileFromUserDirectory))}"));
-            client.SendFile(localPath+"//"+fileToUpload.Name);
+            client.SendFile(localPath);
             byte[] bytes = new byte[500000];
             client.Receive(bytes);
             string data = Encoding.Default.GetString(bytes);
