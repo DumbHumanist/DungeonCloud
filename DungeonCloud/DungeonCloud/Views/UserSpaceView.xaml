@@ -79,6 +79,41 @@
                 </StackPanel>
             </Button>
 
+            <Button x:Name="ButtonDelete" Style="{StaticResource NavigationButton}"
+                    Margin="0,0,185,0"
+                    Background="Transparent"
+                    HorizontalAlignment="Right"
+                    Grid.Row="0"
+                    cal:Message.Attach="[Event Click] = [Action DeleteButtonClick]">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DownloadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="ButtonNewFolder" Style="{StaticResource NavigationButton}"
+                    Margin="0,0,300,0"
+                    Background="Transparent"
+                    HorizontalAlignment="Right"
+                    Grid.Row="0"
+                    cal:Message.Attach="[Event Click] = [Action CreateFolderButtonClick]">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DownloadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
+                </StackPanel>
+            </Button>
+
+            <TextBox
+                Grid.Row="0" 
+                BorderThickness="1"
+                Margin="200,0,345,5"
+                Height="30"
+                VerticalAlignment ="Bottom"
+                Text="{Binding NewFolderName, Mode=OneWayToSource}"
+                Background="Transparent"
+                IsReadOnly="False"
+                TextAlignment="Left"
+                FontWeight="ExtraBold"
+                Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+
 
 
             <ListView

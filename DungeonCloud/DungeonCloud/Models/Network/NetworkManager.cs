@@ -117,7 +117,7 @@ namespace DungeonCloud.Models.Network
             string data = Encoding.Default.GetString(buf);
             return JsonConvert.DeserializeObject<UserDirectory>(data);
         }
-        public UserDirectory DeleteFilder(UserDirectory userDirectory, string pathToFileFromUserDirectory)
+        public UserDirectory DeleteFolder(UserDirectory userDirectory, string pathToFileFromUserDirectory)
         {
             string serverIP = "127.0.0.1";
             int serverPort = 23737;
