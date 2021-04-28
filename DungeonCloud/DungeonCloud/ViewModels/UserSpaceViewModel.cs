@@ -163,18 +163,19 @@ namespace DungeonCloud.ViewModels
         public void DeleteButtonClick()
         {
             if (Path.GetExtension(SelectedItem.FSI.Path) == "")
-                SessionSingleton.Instance.NM.DeleteFolder(UserDirectorySingletone.Instance.UD,
+                UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.DeleteFolder(UserDirectorySingletone.Instance.UD,
                     SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')));
             else
-                SessionSingleton.Instance.NM.RemoveFile(UserDirectorySingletone.Instance.UD,
+                UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.RemoveFile(UserDirectorySingletone.Instance.UD,
                     SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')));
+
         }
 
         public string NewFolderName { get; set; }
 
         public void CreateFolderButtonClick()
         {
-            SessionSingleton.Instance.NM.CreateNewFolder(UserDirectorySingletone.Instance.UD,
+            UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.CreateNewFolder(UserDirectorySingletone.Instance.UD,
                 UserDirectorySingletone.Instance.CurrentDirectory.Path + '\\' + NewFolderName);
         }
     }
