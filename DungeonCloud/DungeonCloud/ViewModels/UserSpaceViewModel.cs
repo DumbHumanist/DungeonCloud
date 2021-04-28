@@ -58,7 +58,9 @@ namespace DungeonCloud.ViewModels
         public async void SelectedItemDoubleClick()
         {
             string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
-            downloadsPath += ("\\" + SelectedItem.FSI.Name); 
+            downloadsPath += ("\\" + SelectedItem.FSI.Name);
+
+            string picExetensions = ".png .jpg .jpeg .bmp .gif";
 
             try
             {
@@ -68,7 +70,7 @@ namespace DungeonCloud.ViewModels
                     UserDirectorySingletone.Instance.CurrentDirectory = SubDir;
                    
                 }
-                else if(Path.GetExtension(SelectedItem.FSI.Name) == ".png")
+                else if(picExetensions.Contains(Path.GetExtension(SelectedItem.FSI.Name)))
                 {
                     int fileSize = Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Name == SelectedItem.FSI.Name).FirstOrDefault().FileSize);
 
@@ -150,7 +152,7 @@ namespace DungeonCloud.ViewModels
                 pathFromRoot = "";
             }
 
-            await Task.Factory.StartNew(() =>
+            UserDirectorySingletone.Instance.UD = await Task.Factory.StartNew(() =>
             SessionSingleton.Instance.NM.UploadNewFile(UserDirectorySingletone.Instance.UD,
                 fileInfo,
                 pathFromRoot,
