@@ -30,13 +30,14 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="17*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <TextBox
-                Grid.Row="0" 
+                Grid.Row="1" 
+                BorderThickness="0"
                 Text="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=CurrentDirectory.Path, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 Background="Transparent"
                 IsReadOnly="True"
@@ -49,7 +50,7 @@
                     Margin="15,0,0,0"
                     Background="Transparent"
                     HorizontalAlignment="Left"
-                    Grid.Row="1"
+                    Grid.Row="0"
                     cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
                 <StackPanel>
                     <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=BackImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
@@ -60,7 +61,7 @@
                     Margin="0,0,15,0"
                     Background="Transparent"
                     HorizontalAlignment="Right"
-                    Grid.Row="1"
+                    Grid.Row="0"
                     cal:Message.Attach="[Event Click] = [Action UploadButtonClick]">
                 <StackPanel>
                     <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=UploadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
@@ -71,7 +72,7 @@
                     Margin="0,0,100,0"
                     Background="Transparent"
                     HorizontalAlignment="Right"
-                    Grid.Row="1"
+                    Grid.Row="0"
                     cal:Message.Attach="[Event Click] = [Action DownloadButtonClick]">
                 <StackPanel>
                     <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DownloadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
@@ -82,6 +83,7 @@
 
             <ListView
                 Grid.Row="3" 
+                BorderThickness="0"
                 ItemsSource="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=DirAndFileCollection, UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding SelectedItem}"
                 cal:Message.Attach="[Event MouseDoubleClick] = [Action SelectedItemDoubleClick]"

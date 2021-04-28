@@ -107,8 +107,8 @@ namespace DungeonCloud.Models
             ThemeSingleton.Instance.SettingsImagePressed = ToBitmapImage(ButtonBgColoring("settings.png"));
             ThemeSingleton.Instance.RegImagePressed = ToBitmapImage(ButtonBgColoring("reg.png"));
 
-            ThemeSingleton.Instance.BackImage = ToBitmapImage(ButtonBgColoring("back.png"));
-            ThemeSingleton.Instance.DownloadImage = ToBitmapImage(ButtonBgColoring("download.png"));
+            ThemeSingleton.Instance.BackImage = ToBitmapImage(ButtonColoring("back.png", SlideBarBackground));
+            ThemeSingleton.Instance.DownloadImage = ToBitmapImage(ButtonColoring("download.png", SlideBarBackground));
             ThemeSingleton.Instance.UploadImage = ToBitmapImage(ButtonColoring("upload.png", SlideBarBackground));
 
         }
