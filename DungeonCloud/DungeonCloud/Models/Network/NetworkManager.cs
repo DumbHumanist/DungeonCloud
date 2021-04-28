@@ -45,7 +45,7 @@ namespace DungeonCloud.Models.Network
         {
             try
             {
-                string serverIP = "25.118.32.181";
+                string serverIP = "127.0.0.1";
                 int serverPort = 23737;
                 IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
                 Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
@@ -64,7 +64,7 @@ namespace DungeonCloud.Models.Network
 
         public UserDirectory UploadNewFile(UserDirectory userDirectory, DungeonFileInfo fileToUpload,string pathToFileFromUserDirectory, string localPath)
         {
-            string serverIP = "25.118.32.181";
+            string serverIP = "127.0.0.1";
             int serverPort = 23737;
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
             Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
@@ -79,7 +79,7 @@ namespace DungeonCloud.Models.Network
 
         public byte[] DownloadFile(UserDirectory userDirectory, string pathToFileFromUserDirectory, int fileSize)
         {
-            string serverIP = "25.118.32.181";
+            string serverIP = "127.0.0.1";
             int serverPort = 23737;
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
             Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
@@ -92,7 +92,7 @@ namespace DungeonCloud.Models.Network
 
         public UserDirectory RemoveFile(UserDirectory userDirectory, string pathToFileFromUserDirectory)
         {
-            string serverIP = "25.118.32.181";
+            string serverIP = "127.0.0.1";
             int serverPort = 23737;
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
             Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);

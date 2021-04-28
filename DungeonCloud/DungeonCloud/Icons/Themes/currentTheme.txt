@@ -1,4 +1,1 @@
-<<<<<<< HEAD
-SkyBlue;#1f4f91;#2F80ED;#56CCF2;#288dad;#2ca9d1
-=======
-Aquatic
+Aquatic;#34254f;#8360c3;#2ebf91;#269974;#2db388
