@@ -33,18 +33,18 @@ namespace Server
             {
                 DungeonDirectoryInfo dungeonDirectoryInfoTemp = new DungeonDirectoryInfo();
                 dungeonDirectoryInfoTemp.Path = path;
-                dungeonDirectoryInfoTemp.Name = path.Split('/')[path.Split('/').Length - 1];
+                dungeonDirectoryInfoTemp.Name = path.Split('\\')[path.Split('\\').Length - 1];
                 foreach (var j in new DirectoryInfo(path).GetFiles())
                 {
                     DungeonFileInfo fi = new DungeonFileInfo();
                     fi.FileSize = j.Length;
                     fi.Name = j.Name;
-                    fi.Path = path + "//" + j.Name;
+                    fi.Path = path + "\\" + j.Name;
                     dungeonDirectoryInfoTemp.ChildrenFiles.Add(fi);
                 }
                 foreach (var s in new DirectoryInfo(path).GetDirectories())
                 {
-                    dungeonDirectoryInfoTemp.ChildrenFolders.Add(GetUserDirectory(path+"//"+s.Name));
+                    dungeonDirectoryInfoTemp.ChildrenFolders.Add(GetUserDirectory(path+"\\"+s.Name));
                 }
 
                 return dungeonDirectoryInfoTemp;

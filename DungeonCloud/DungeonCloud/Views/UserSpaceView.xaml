@@ -18,8 +18,8 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="17*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
@@ -29,39 +29,75 @@
                 Text="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=CurrentDirectory.Path, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 Background="Transparent"
                 IsReadOnly="True"
-                TextAlignment="Left">
+                TextAlignment="Left"
+                FontWeight="ExtraBold"
+                Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
 
             <Button 
-                Grid.Row="2"
+                Width="200"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
+                Grid.Row="1"
                 Content="Back"
                 cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
 
             </Button>
 
             <ListView
-                Grid.Row="4" 
+                Grid.Row="3" 
                 ItemsSource="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=DirAndFileCollection, UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding SelectedItem}"
-                cal:Message.Attach="[Event DoubleClick] = [Action SelectedItemDoubleClick]"
+                cal:Message.Attach="[Event MouseDoubleClick] = [Action SelectedItemDoubleClick]"
                 Background="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Height="100">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="{Binding ImageSource}" Grid.Column="0"></Image>
-                            <TextBlock Text="{Binding FSI.Name}" Grid.Column="1"></TextBlock>
-                            <Button Grid.Column="2" Width="100" Height="70" Content="Download"></Button>
+                            <Button Grid.Column="0"
+                                    Width="100"
+                                    Height="70"
+                                    Margin="20,0,0,0"
+                                    Content="Download"
+                                    HorizontalAlignment="Right"
+                                    cal:Action.TargetWithoutContext="{Binding RelativeSource={
+                                                RelativeSource AncestorType=UserControl, 
+                                                Mode=FindAncestor}, 
+                                                Path=DataContext}" 
+                                    cal:Message.Attach="[Event Click] = [Action DownloadButtonClick]"></Button>
+
+                            <Image Source="{Binding ImageSource}"
+                                   Margin="20,0,0,0"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Left"></Image>
+
+                            <TextBlock Text="{Binding FSI.Name}"
+                                       Grid.Column="2"
+                                       HorizontalAlignment="Left"
+                                       TextAlignment="Left"
+                                       FontSize="35"
+                                       Margin="20, 0, 0,0"
+                                       VerticalAlignment="Center"
+                                       FontWeight="ExtraBold"
+                                       Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
             </ListView>
+
+            <Button Content="Upload"
+                    Grid.Row="5"
+                    Width="200"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left">
+
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

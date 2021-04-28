@@ -18,13 +18,22 @@ namespace DungeonCloud.Models
 
         private UserDirectory uD;
 
-        public UserDirectory UD { get; set; }
+        public UserDirectory UD 
+        {
+            get => uD;
+            set
+            {
+                uD = value;
+                CurrentDirectory = uD.Dir;
+                NotifyOfPropertyChange();
+            }
+        }
 
         private DungeonDirectoryInfo currentDirectory;
 
         public DungeonDirectoryInfo CurrentDirectory
         {
-            get { return currentDirectory; }
+            get => currentDirectory;
             set
             {
                 currentDirectory = value;
