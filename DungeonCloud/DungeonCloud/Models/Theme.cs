@@ -100,12 +100,16 @@ namespace DungeonCloud.Models
         }
         public void SetColors()
         {
-            ThemeSingleton.Instance.MainImageDefault = ToBitmapImage(ButtonColoring("main.png"));
-            ThemeSingleton.Instance.SettingsImageDefault = ToBitmapImage(ButtonColoring("settings.png"));
-            ThemeSingleton.Instance.RegImageDefault = ToBitmapImage(ButtonColoring("reg.png"));
+            ThemeSingleton.Instance.MainImageDefault = ToBitmapImage(ButtonColoring("main.png", NavigationButtonColor));
+            ThemeSingleton.Instance.SettingsImageDefault = ToBitmapImage(ButtonColoring("settings.png", NavigationButtonColor));
+            ThemeSingleton.Instance.RegImageDefault = ToBitmapImage(ButtonColoring("reg.png", NavigationButtonColor));
             ThemeSingleton.Instance.MainImagePressed = ToBitmapImage(ButtonBgColoring("main.png"));
             ThemeSingleton.Instance.SettingsImagePressed = ToBitmapImage(ButtonBgColoring("settings.png"));
             ThemeSingleton.Instance.RegImagePressed = ToBitmapImage(ButtonBgColoring("reg.png"));
+
+            ThemeSingleton.Instance.BackImage = ToBitmapImage(ButtonBgColoring("back.png"));
+            ThemeSingleton.Instance.DownloadImage = ToBitmapImage(ButtonBgColoring("download.png"));
+            ThemeSingleton.Instance.UploadImage = ToBitmapImage(ButtonColoring("upload.png", SlideBarBackground));
 
         }
 
@@ -128,11 +132,11 @@ namespace DungeonCloud.Models
         }
 
 
-        public Bitmap ButtonColoring(string path)
+        public Bitmap ButtonColoring(string path, string clr)
         {
             Bitmap bitmap = new Bitmap(Dir + "\\Default\\" + path);
 
-            Color c = HexToRGB.HexToColor(NavigationButtonColor);
+            Color c = HexToRGB.HexToColor(clr);
 
             for (int i = 0; i < bitmap.Width; ++i)
                 for (int j = 0; j < bitmap.Height; ++j)
