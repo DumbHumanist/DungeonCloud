@@ -38,7 +38,7 @@
             <TextBox
                 Grid.Row="1" 
                 BorderThickness="0"
-                Text="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=CurrentDirectory.Path, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Source={x:Static singleton:UserDirectorySingletone.Instance}, Path=PathString, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 Background="Transparent"
                 IsReadOnly="True"
                 TextAlignment="Left"
