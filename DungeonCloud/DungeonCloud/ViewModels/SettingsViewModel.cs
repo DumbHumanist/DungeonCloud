@@ -107,9 +107,24 @@ namespace DungeonCloud.ViewModels
         }
         public void AddTheme()
         {
-            string Dir = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
-            Theme newTheme = new Theme(Name, SlideBarBackground, WindowBackgroundColor1, WindowBackgroundColor2, NavigationButtonColor, NavigationButtonPressedColor, Dir);
-            ThemeSingleton.Instance.Themes.Add(newTheme);
+            if (SlideBarBackground.Length == 7 && SlideBarBackground[0] == '#')
+            {
+                if (WindowBackgroundColor1.Length == 7 && WindowBackgroundColor1[0] == '#')
+                {
+                    if (WindowBackgroundColor2.Length == 7 && WindowBackgroundColor2[0] == '#')
+                    {
+                        if (NavigationButtonColor.Length == 7 && NavigationButtonColor[0] == '#')
+                        {
+                            if (NavigationButtonPressedColor.Length == 7 && NavigationButtonPressedColor[0] == '#')
+                            {
+                                string Dir = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).FullName).FullName + @"\Icons";
+                                Theme newTheme = new Theme(Name, SlideBarBackground, WindowBackgroundColor1, WindowBackgroundColor2, NavigationButtonColor, NavigationButtonPressedColor, Dir);
+                                ThemeSingleton.Instance.Themes.Add(newTheme);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

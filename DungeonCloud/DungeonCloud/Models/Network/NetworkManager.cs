@@ -64,17 +64,24 @@ namespace DungeonCloud.Models.Network
 
         public UserDirectory UploadNewFile(UserDirectory userDirectory, DungeonFileInfo fileToUpload,string pathToFileFromUserDirectory, string localPath)
         {
-            string serverIP = "127.0.0.1";
-            int serverPort = 23737;
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
-            Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            client.Connect(ep);
-            client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(new Package(1, userDirectory, this.Session, fileToUpload, pathToFileFromUserDirectory))}"));
-            client.SendFile(localPath);
-            byte[] bytes = new byte[500000];
-            client.Receive(bytes);
-            string data = Encoding.Default.GetString(bytes);
-            return JsonConvert.DeserializeObject<UserDirectory>(data);
+            try
+            {
+                string serverIP = "127.0.0.1";
+                int serverPort = 23737;
+                IPEndPoint ep = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
+                Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+                client.Connect(ep);
+                client.Send(Encoding.Default.GetBytes($"{JsonConvert.SerializeObject(new Package(1, userDirectory, this.Session, fileToUpload, pathToFileFromUserDirectory))}"));
+                client.SendFile(localPath);
+                byte[] bytes = new byte[500000];
+                client.Receive(bytes);
+                string data = Encoding.Default.GetString(bytes);
+                return JsonConvert.DeserializeObject<UserDirectory>(data);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public byte[] DownloadFile(UserDirectory userDirectory, string pathToFileFromUserDirectory, int fileSize)

@@ -46,75 +46,86 @@
                 Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
 
-            <Button x:Name="ButtonBack" Style="{StaticResource NavigationButton}"
-                    Margin="15,0,0,0"
-                    Background="Transparent"
-                    HorizontalAlignment="Left"
-                    Grid.Row="0"
-                    cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
-                <StackPanel>
-                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=BackImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
-                </StackPanel>
-            </Button>
-            
-            <Button x:Name="ButtonUpload" Style="{StaticResource NavigationButton}"
-                    Margin="0,0,15,0"
-                    Background="Transparent"
-                    HorizontalAlignment="Right"
-                    Grid.Row="0"
-                    cal:Message.Attach="[Event Click] = [Action UploadButtonClick]">
-                <StackPanel>
-                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=UploadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
-                </StackPanel>
-            </Button>
-            
-            <Button x:Name="ButtonDownload" Style="{StaticResource NavigationButton}"
-                    Margin="0,0,100,0"
-                    Background="Transparent"
-                    HorizontalAlignment="Right"
-                    Grid.Row="0"
-                    cal:Message.Attach="[Event Click] = [Action DownloadButtonClick]">
-                <StackPanel>
-                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DownloadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
-                </StackPanel>
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="7*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>            
+                
+                
+                <Button x:Name="ButtonBack" Style="{StaticResource NavigationButton}"
+                        Grid.Column="0"
+                        Background="Transparent"
+                        HorizontalAlignment="Left"
+                        Grid.Row="0"
+                        cal:Message.Attach="[Event Click] = [Action BackButtonClick]">
+                    <StackPanel>
+                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=BackImage, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                    </StackPanel>
+                </Button>
 
-            <Button x:Name="ButtonDelete" Style="{StaticResource NavigationButton}"
-                    Margin="0,0,185,0"
+                <Button x:Name="ButtonUpload" Style="{StaticResource NavigationButton}"
+                        Grid.Column="2"
+                        Background="Transparent"
+                        HorizontalAlignment="Right"
+                        Grid.Row="0"
+                        cal:Message.Attach="[Event Click] = [Action UploadButtonClick]">
+                    <StackPanel>
+                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=UploadImage, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="ButtonDownload" Style="{StaticResource NavigationButton}"
+                        Grid.Column="3"
+                        Background="Transparent"
+                        HorizontalAlignment="Right"
+                        Grid.Row="0"
+                        cal:Message.Attach="[Event Click] = [Action DownloadButtonClick]">
+                    <StackPanel>
+                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DownloadImage, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="ButtonDelete" Style="{StaticResource NavigationButton}"
+                        Grid.Column="4"
+                        Background="Transparent"
+                        HorizontalAlignment="Right"
+                        Grid.Row="0"
+                        cal:Message.Attach="[Event Click] = [Action DeleteButtonClick]">
+                    <StackPanel>
+                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DeleteImage, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="ButtonNewFolder" Style="{StaticResource NavigationButton}"
+                        Grid.Column="1"
+                        Background="Transparent"
+                        HorizontalAlignment="Right"
+                        Grid.Row="0"
+                        cal:Message.Attach="[Event Click] = [Action CreateFolderButtonClick]">
+                    <StackPanel>
+                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=FolderImage, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                    </StackPanel>
+                </Button>
+
+                <TextBox
+                    Grid.Column="1"
+                    BorderThickness="2"
+                    BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="26"
+                    Margin="10,3,50,3"
+                    Text="{Binding NewFolderName, Mode=OneWayToSource}"
                     Background="Transparent"
-                    HorizontalAlignment="Right"
-                    Grid.Row="0"
-                    cal:Message.Attach="[Event Click] = [Action DeleteButtonClick]">
-                <StackPanel>
-                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DownloadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
-                </StackPanel>
-            </Button>
+                    IsReadOnly="False"
+                    TextAlignment="Left"
+                    FontWeight="ExtraBold"
+                    Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                </TextBox>
 
-            <Button x:Name="ButtonNewFolder" Style="{StaticResource NavigationButton}"
-                    Margin="0,0,300,0"
-                    Background="Transparent"
-                    HorizontalAlignment="Right"
-                    Grid.Row="0"
-                    cal:Message.Attach="[Event Click] = [Action CreateFolderButtonClick]">
-                <StackPanel>
-                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=DownloadImage, UpdateSourceTrigger=PropertyChanged}" Height="40"/>
-                </StackPanel>
-            </Button>
-
-            <TextBox
-                Grid.Row="0" 
-                BorderThickness="1"
-                Margin="200,0,345,5"
-                Height="30"
-                VerticalAlignment ="Bottom"
-                Text="{Binding NewFolderName, Mode=OneWayToSource}"
-                Background="Transparent"
-                IsReadOnly="False"
-                TextAlignment="Left"
-                FontWeight="ExtraBold"
-                Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-
+            </Grid>
 
             <ListView
                 Grid.Row="3" 

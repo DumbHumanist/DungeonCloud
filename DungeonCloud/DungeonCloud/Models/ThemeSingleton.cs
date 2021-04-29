@@ -53,7 +53,7 @@ namespace DungeonCloud.Models
 
                 currentTheme.SetColors();
                 NotifyOfPropertyChange();
-
+                SaveCurrentTheme();
                 MainImage = MainImageDefault;
                 SettingsImage = SettingsImageDefault;
                 RegImage = RegImageDefault;
@@ -147,6 +147,27 @@ namespace DungeonCloud.Models
             get => uploadImage;
         }
 
+        ImageSource deleteImage;
+        public ImageSource DeleteImage
+        {
+            set
+            {
+                deleteImage = value;
+                NotifyOfPropertyChange();
+            }
+            get => deleteImage;
+        }
+        ImageSource folderImage;
+        public ImageSource FolderImage
+        {
+            set
+            {
+                folderImage = value;
+                NotifyOfPropertyChange();
+            }
+            get => folderImage;
+        }
+
         //-------
 
         string Dir;
@@ -172,8 +193,16 @@ namespace DungeonCloud.Models
             File.Delete($"{Dir}\\Themes\\themes.txt");
             using (StreamWriter sw = new StreamWriter($"{Dir}\\Themes\\themes.txt", true))
             {
-                foreach(Theme t in Themes)
+                foreach (Theme t in Themes)
                     sw.WriteLine($"{t.Name};{t.SlideBarBackground};{t.WindowBackgroundColor1};{t.WindowBackgroundColor2};{t.NavigationButtonColor};{t.NavigationButtonPressedColor}");
+            }
+        }
+        public void SaveCurrentTheme()
+        {
+            File.Delete($"{Dir}\\Themes\\currentTheme.txt");
+            using (StreamWriter sw = new StreamWriter($"{Dir}\\Themes\\currentTheme.txt", true))
+            {
+                sw.Write($"{currentTheme.Name};{currentTheme.SlideBarBackground};{currentTheme.WindowBackgroundColor1};{currentTheme.WindowBackgroundColor2};{currentTheme.NavigationButtonColor};{CurrentTheme.NavigationButtonPressedColor}");
             }
         }
         public void LoadThemes()

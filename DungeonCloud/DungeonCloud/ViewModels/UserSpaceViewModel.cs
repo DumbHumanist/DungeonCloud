@@ -162,21 +162,31 @@ namespace DungeonCloud.ViewModels
 
         public void DeleteButtonClick()
         {
-            if (Path.GetExtension(SelectedItem.FSI.Path) == "")
-                UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.DeleteFolder(UserDirectorySingletone.Instance.UD,
-                    SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')));
-            else
-                UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.RemoveFile(UserDirectorySingletone.Instance.UD,
-                    SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')));
-
+            try
+            {
+                if (Path.GetExtension(SelectedItem.FSI.Path) == "")
+                    UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.DeleteFolder(UserDirectorySingletone.Instance.UD,
+                        SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')));
+                else
+                    UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.RemoveFile(UserDirectorySingletone.Instance.UD,
+                        SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')));
+            }
+            catch { }
         }
 
         public string NewFolderName { get; set; }
 
         public void CreateFolderButtonClick()
         {
-            UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.CreateNewFolder(UserDirectorySingletone.Instance.UD,
-                UserDirectorySingletone.Instance.CurrentDirectory.Path + '\\' + NewFolderName);
+            try
+            {
+                UserDirectorySingletone.Instance.UD = SessionSingleton.Instance.NM.CreateNewFolder(UserDirectorySingletone.Instance.UD,
+                    UserDirectorySingletone.Instance.CurrentDirectory.Path + '\\' + NewFolderName);
+            }
+            catch
+            {
+
+            }
         }
     }
 }
