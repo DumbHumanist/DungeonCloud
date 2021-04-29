@@ -89,6 +89,21 @@ namespace DungeonCloud.ViewModels
                     ThemeSingleton.Instance.Image = bitmap;
                     ViewSingleton.Instance.CurrentView = ViewSingleton.Instance.imageView; 
                 }
+                else if(Path.GetExtension(SelectedItem.FSI.Name) == ".txt")
+                {
+                    int fileSize = Convert.ToInt32(SelectedItem.FSI.GetParent().ChildrenFiles.Where(a => a.Name == SelectedItem.FSI.Name).FirstOrDefault().FileSize);
+
+                    byte[] fileBytes = await Task<byte[]>.Run(() =>
+                    SessionSingleton.Instance.NM.DownloadFile(UserDirectorySingletone.Instance.UD,
+                    SelectedItem.FSI.Path.Substring(SelectedItem.FSI.Path.IndexOf('\\')),
+                    fileSize));
+
+                    await Task.Factory.StartNew(() => File.WriteAllBytes(downloadsPath, fileBytes));
+
+                    ThemeSingleton.Instance.Text = File.ReadAllText(downloadsPath);
+                    ViewSingleton.Instance.CurrentView = ViewSingleton.Instance.textView;
+                }
+
 
             }
             catch
