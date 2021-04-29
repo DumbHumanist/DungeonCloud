@@ -23,9 +23,13 @@ namespace DungeonCloud.Models
             get => uD;
             set
             {
-                uD = value;
-                CurrentDirectory = uD.Dir;
-                NotifyOfPropertyChange();
+                try
+                {
+                    uD = value;
+                    CurrentDirectory = uD.Dir;
+                    NotifyOfPropertyChange();
+                }
+                catch { }
             }
         }
 

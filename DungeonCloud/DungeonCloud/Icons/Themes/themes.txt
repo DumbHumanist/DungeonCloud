@@ -2,3 +2,6 @@ Scarlet;#2b0721;#240b36;#c31432;#691120;#91162b
 Aquatic;#34254f;#8360c3;#2ebf91;#269974;#2db388
 Terminal;#000000;#0b1a0b;#0f9b0f;#147814;#16ab16
 SkyBlue;#1f4f91;#2F80ED;#56CCF2;#288dad;#2ca9d1
+DeepSpace;#000000;#000000;#434343;#454545;#5c5c5c
+Mango;#8a1516;#C02425;#F0CB35;#bfa021;#F0CB35
+Silver;#66707a;#8494a1;#eef2f3;#d3d9db;#f2fafc

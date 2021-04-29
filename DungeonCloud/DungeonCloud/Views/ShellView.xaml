@@ -5,7 +5,9 @@
         xmlns:vm="clr-namespace:DungeonCloud.ViewModels"
         xmlns:singleton="clr-namespace:DungeonCloud.Models"
         Width ="1000"
-        Height="600">
+        Height="600"
+        MinHeight="535" 
+        MinWidth="600">
 
     <Window.DataContext>
         <vm:ShellViewModel></vm:ShellViewModel>
@@ -79,6 +81,46 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
+        <Grid Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, UpdateSourceTrigger=PropertyChanged}"
+                        VerticalAlignment="Stretch"
+                        Width="{Binding NavigationBarWidth}"
+                        Grid.Column="0"
+                        cal:Message.Attach="[Event MouseEnter] = [Action MouseEnterNavigationBar] ; 
+                        [Event MouseLeave] = [Action MouseLeaveNavigationBar]">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Margin="5"></Label>
+            <Button x:Name="ButtonMain" Style="{StaticResource NavigationButton}"
+                    cal:Message.Attach="[Event Click] = [Action MainButtonPressed]"
+                    Background="Transparent"
+                    Grid.Row="0">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=MainImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="ButtonSettings" Style="{StaticResource NavigationButton}"
+                        cal:Message.Attach="[Event Click] = [Action SettingsButtonPressed]"
+                        Background="Transparent"
+                        Grid.Row="1">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=SettingsImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="ButtonReg" Style="{StaticResource NavigationButton}"
+                        cal:Message.Attach="[Event Click] = [Action RegButtonPressed]"
+                        Background="Transparent"
+                        VerticalAlignment="Bottom"
+                        Grid.Row="3">
+                <StackPanel>
+                    <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=RegImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
         <Canvas Grid.Column="0">
             <Button Grid.Column="0" Height="1035" Width="{Binding NavigationBarWidth}" VerticalAlignment="Top" Background="Transparent" BorderBrush="Gray" RenderTransformOrigin="0.5,0.5"
                     Canvas.ZIndex ="1" Canvas.Left="-272" Canvas.Top="-35">
@@ -97,37 +139,7 @@
 
 
 
-            <StackPanel Grid.Column="0" Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.SlideBarBackground, UpdateSourceTrigger=PropertyChanged}"
-                        Height="1000"
-                        Width="{Binding NavigationBarWidth}"
-                        Canvas.ZIndex ="0"
-                        cal:Message.Attach="[Event MouseEnter] = [Action MouseEnterNavigationBar] ; 
-                        [Event MouseLeave] = [Action MouseLeaveNavigationBar]">
-                <Label Margin="5"></Label>
-                <Button x:Name="ButtonMain" Style="{StaticResource NavigationButton}"
-                    cal:Message.Attach="[Event Click] = [Action MainButtonPressed]"
-                    Background="Transparent">
-                <StackPanel>
-                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=MainImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
-                </StackPanel>
-                </Button>
-                <Button x:Name="ButtonSettings" Style="{StaticResource NavigationButton}"
-                        cal:Message.Attach="[Event Click] = [Action SettingsButtonPressed]"
-                        Background="Transparent">
-                    <StackPanel>
-                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=SettingsImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
-                    </StackPanel>
-                </Button>
-                <Label Margin="170"></Label>
-                <Button x:Name="ButtonReg" Style="{StaticResource NavigationButton}"
-                        cal:Message.Attach="[Event Click] = [Action RegButtonPressed]"
-                        Background="Transparent"
-                        VerticalAlignment="Bottom">
-                    <StackPanel>
-                        <Image Source="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=RegImage, UpdateSourceTrigger=PropertyChanged}" Height="50"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+            
         </Canvas>
         
         <Rectangle Grid.Column="1" x:Name="MainGradient">
