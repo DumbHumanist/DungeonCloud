@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DungeonCloud.Models.Files
 {
@@ -16,10 +17,12 @@ namespace DungeonCloud.Models.Files
         {
 
             DungeonDirectoryInfo temp = SessionSingleton.Instance.NM.LoadFiles(SessionSingleton.Instance.NM.Session).Dir;
-            for (int i = 1; i < Path.Split('\\').Length - 2; i++)
+            
+            for (int i = 1; i < Path.Split('\\').Length - 1; i++)
             {
                 temp = temp.GetChildByName(Path.Split('\\')[i]);
             }
+
             return temp;
         }
 
